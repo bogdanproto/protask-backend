@@ -1,4 +1,4 @@
-export const userStatus = {
+const userStatus = {
   USER_LOGIN: {
     status: 200,
     code: 'user_login_success',
@@ -41,3 +41,5 @@ export const userStatus = {
     message: 'Email already exists',
   },
 };
+
+export default userStatus;

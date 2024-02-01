@@ -1,4 +1,6 @@
-export const authPath = {
+const authPath = {
   BASE: '/auth',
   SIGN_IN: '/signin',
 };
+
+export default authPath;
