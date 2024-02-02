@@ -1,12 +1,14 @@
 import express from 'express';
 
+import { authPath } from '../../const/index.js';
 import authController from '../../controllers/auth-controller.js';
-import { isEmptyBody, authenticate, upload } from '../../middlewares/index.js';
+import { authenticate } from '../../middlewares/index.js';
 import { validateBody } from '../../decorators/index.js';
 import {
-  userSignSchema,
+  userSignupSchema,
+  userSigninSchema,
   userEmailSchema,
-  userUpdateSubscriptionSchema,
+  // userUpdateSchema,
 } from '../../models/User.js';
 
 // ============================================================
@@ -14,44 +16,42 @@ import {
 const authRouter = express.Router();
 
 authRouter.post(
-  '/register',
-  isEmptyBody,
-  validateBody(userSignSchema),
-  authController.register
+  authPath.SIGN_UP,
+  validateBody(userSignupSchema),
+  authController.signup
 );
 
-authRouter.get('/verify/:verificationToken', authController.verify);
+authRouter.get(authPath.VERIFY_CODE, authController.verify);
 
 authRouter.post(
-  '/verify',
-  isEmptyBody,
+  authPath.VERIFY,
   validateBody(userEmailSchema),
-  authController.repeatVerify
+  authController.resendVerifyEmail
 );
 
 authRouter.post(
-  '/login',
-  isEmptyBody,
-  validateBody(userSignSchema),
-  authController.login
+  authPath.SIGN_IN,
+  validateBody(userSigninSchema),
+  authController.signin
 );
 
-authRouter.get('/current', authenticate, authController.getCurrent);
+authRouter.get(authPath.CURRENT, authenticate, authController.getCurrent);
 
-authRouter.post('/logout', authenticate, authController.logout);
+authRouter.post(authPath.SIGNOUT, authenticate, authController.signout);
 
-authRouter.patch(
-  '/',
-  authenticate,
-  validateBody(userUpdateSubscriptionSchema),
-  authController.changeSubscription
-);
+// authRouter.patch(
+//   authPath.ROOT,
+//   authenticate,
+//   isEmptyBody,
+//   validateBody(userUpdateSchema),
+//   authController.updateUser
+// );
 
-authRouter.patch(
-  '/avatars',
-  authenticate,
-  upload.single('avatar'),
-  authController.changeAvatar
-);
+// authRouter.patch(
+//   authPath.AVATARS,
+//   authenticate,
+//   upload.single('avatar'),
+//   authController.changeAvatar
+// );
 
 export default authRouter;

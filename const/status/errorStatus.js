@@ -21,6 +21,12 @@ const errorStatus = {
     message: 'Params is wrong or has wrong type',
   },
 
+  BAD_FILE_EXTENTION: {
+    status: 400,
+    code: 'bad_file_extention',
+    message: 'not valid extention',
+  },
+
   // ============Mongoose================================
   BAD_DATA_MONGOOSE: {
     status: 400,
