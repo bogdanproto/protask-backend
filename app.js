@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use(`${apiPath}${authPath.BASE}`, authRouter);
-app.use(`${apiPath}${boardsPath.ROOT}`, boardsRouter);
+app.use(boardsPath.ROOT, boardsRouter);
 
 app.use((req, res) => {
   res.status(errorStatus.NOT_FOUND.status).json(errorStatus.NOT_FOUND);
