@@ -1,8 +1,8 @@
-const httpError = ({ status, code, message }) => {
+const HttpError = ({ status, code, message }) => {
   const error = new Error(message);
   error.status = status;
   error.code = code;
   return error;
 };
 
-export default httpError;
+export default HttpError;
