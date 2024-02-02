@@ -13,12 +13,26 @@ const errorStatus = {
 
   NOT_FOUND: { status: 404, code: 'not_found', message: 'Not Found' },
 
+  NOT_FOUND_BOARD: {
+    status: 404,
+    code: 'not_found_board',
+    message: 'Board Not Found',
+  },
+
   BAD_DATA: { status: 400, code: 'bad_data', message: 'Bad Request' },
+
+  EMPTY_BODY: { status: 400, code: 'empty_body', message: 'Missing fields' },
 
   BAD_PARAMS: {
     status: 400,
     code: 'bad_params',
     message: 'Params is wrong or has wrong type',
+  },
+
+  BAD_PARAMS_BOARD: {
+    status: 400,
+    code: 'bad_params_board',
+    message: 'Params of board are wrong or has wrong type',
   },
 
   // ============Mongoose================================
