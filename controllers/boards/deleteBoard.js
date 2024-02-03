@@ -5,10 +5,12 @@ import { errorStatus, successStatus } from '../../const/index.js';
 // ============================================================
 
 export const deleteBoard = async (req, res) => {
-  const { id } = req.params;
-  const result = await Board.findByIdAndDelete(id);
+  const { id: _id } = req.params;
+  const { _id: owner } = req.user;
+  const result = await Board.findOneAndDelete({ _id, owner });
   if (!result) {
     throw HttpError(errorStatus.NOT_FOUND_BOARD);
   }
+
   res.json({ ...successStatus.DELETED_BOARD, data: result });
 };

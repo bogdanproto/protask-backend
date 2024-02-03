@@ -5,10 +5,12 @@ import { errorStatus, successStatus } from '../../const/index.js';
 // ============================================================
 
 export const updateBoard = async (req, res) => {
-  const { id } = req.params;
-  const result = await Board.findByIdAndUpdate(id, req.body);
+  const { id: _id } = req.params;
+  const { _id: owner } = req.user;
+  const result = await Board.findOneAndUpdate({ _id, owner }, req.body);
   if (!result) {
     throw HttpError(errorStatus.NOT_FOUND_BOARD);
   }
+
   res.json({ ...successStatus.UPDATED_BOARD, data: result });
 };

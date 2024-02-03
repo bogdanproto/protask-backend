@@ -4,25 +4,13 @@ import { successStatus } from '../../const/index.js';
 // ============================================================
 
 export const getAllBoards = async (req, res) => {
-  const result = await Board.find({}, '-createdAt -updatedAt');
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 10 } = req.query;
+  const skip = (page - 1) * limit;
+  const result = await Board.find({ owner }, '-createdAt -updatedAt', {
+    skip,
+    limit,
+  }).populate('owner', 'userName');
 
-  return res.json({ ...successStatus.GET, data: [...result] });
+  res.json({ ...successStatus.GET, data: [...result] });
 };
-
-// // // ============================================================
-
-// const getAllBoards = async (req, res) => {
-//   const { _id: owner } = req.user;
-//   const { page = 1, limit = 20, favorite } = req.query;
-//   const skip = (page - 1) * limit;
-//   const filterParams = favorite ? { owner, favorite } : { owner };
-//   const result = await Board.find(filterParams, '', { skip, limit }).populate(
-//     'owner',
-//     'email'
-//   );
-
-//   res.json(result);
-// };
-
-// ============================================================
-// ============================================================
