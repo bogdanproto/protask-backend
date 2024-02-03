@@ -6,23 +6,7 @@ import User from "../models/User.js";
 import { userStatus } from "../const/index.js";
 import httpError from "../helpers/errorHandlers/httpError.js";
 import { ctrlWrapper } from "../decorators/index.js";
-import {signup, signin} from "./auth/index.js";
-
-const getCurrent = async(req, res)=> {
-    const {userName, email, theme, avatarCloudURL} = req.user;
-
-    res.status(userStatus.USER_CURRENT.status).json({
-        ...userStatus.USER_CURRENT,
-        data: {
-            user: {
-                userName,
-                email,
-                theme,
-                avatarCloudURL,
-            },
-        }
-    })
-}
+import {signup, signin, getCurrent} from "./auth/index.js";
 
 const logout = async(req, res)=> {
     const { _id } = req.user;
