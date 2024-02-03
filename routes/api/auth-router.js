@@ -1,14 +1,18 @@
 import express from 'express';
 
 import { authPath } from '../../const/index.js';
-import authController from '../../controllers/auth-controller.js';
-import { authenticate, isEmptyBody } from '../../middlewares/index.js';
-import { validateBody } from '../../decorators/index.js';
+import {
+  authenticate,
+  isEmptyBody,
+  validateBody,
+} from '../../middlewares/index.js';
 import {
   userSignupSchema,
   userSigninSchema,
   userUpdateSchema,
-} from '../../schema/User/joi/index.js';
+} from '../../schemas/User/joi/index.js';
+
+import authController from '../../controllers/auth/index.js';
 
 // ============================================================
 
@@ -16,12 +20,14 @@ const authRouter = express.Router();
 
 authRouter.post(
   authPath.SIGN_UP,
+  isEmptyBody,
   validateBody(userSignupSchema),
   authController.signup
 );
 
 authRouter.post(
   authPath.SIGN_IN,
+  isEmptyBody,
   validateBody(userSigninSchema),
   authController.signin
 );

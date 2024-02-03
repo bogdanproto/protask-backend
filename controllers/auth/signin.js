@@ -1,47 +1,45 @@
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import "dotenv/config";
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
-import { User } from "../../models/index.js";
+import { User } from '../../models/index.js';
 
-import { userStatus } from "../../const/index.js";
-import httpError from "../../helpers/errorHandlers/httpError.js";
+import { userStatus } from '../../const/index.js';
+import { HttpError } from '../../helpers/index.js';
 
-const {JWT_SECRET} = process.env;
+const { JWT_SECRET } = process.env;
 
-const signin = async (req, res) => {
-    const {email, password} = req.body;
-    const user = await User.findOne({ email });
-    if (!user) {
-        throw httpError(userStatus.USER_UNAUTHORIZED);
-    }
+export const signin = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw HttpError(userStatus.USER_UNAUTHORIZED);
+  }
 
-    const passwordCompare = await bcrypt.compare(password, user.password);
-    
-    if (!passwordCompare) {
-        throw httpError(userStatus.USER_UNAUTHORIZED);
-    }
+  const passwordCompare = await bcrypt.compare(password, user.password);
 
-    const {_id: id} = user;
-    const payload = {
-        id
-    };
+  if (!passwordCompare) {
+    throw HttpError(userStatus.USER_UNAUTHORIZED);
+  }
 
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
-    await User.findByIdAndUpdate(id, {token});
+  const { _id: id } = user;
+  const payload = {
+    id,
+  };
 
-    res.status(userStatus.USER_LOGIN.status).json({
-        ...userStatus.USER_LOGIN,
-        data: {
-            user: {
-                userName: user.userName,
-                email: user.email,
-                theme: user.theme,
-                avatarCloudURL: user.avatarCloudURL,
-            },
-            token,
-        }
-    })
-}
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '23h' });
+  await User.findByIdAndUpdate(id, { token });
 
-export default signin;
+  res.status(userStatus.USER_LOGIN.status).json({
+    ...userStatus.USER_LOGIN,
+    data: {
+      user: {
+        userName: user.userName,
+        email: user.email,
+        theme: user.theme,
+        avatarCloudURL: user.avatarCloudURL,
+      },
+      token,
+    },
+  });
+};

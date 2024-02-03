@@ -1,19 +1,19 @@
 import express from 'express';
 
-import boardsController from '../../controllers/boards/index.js';
-
 import { boardsPath } from '../../const/index.js';
 import {
+  authenticate,
+  isValidId,
   isEmptyBody,
   validateBody,
-  isValidId,
-  authenticate,
 } from '../../middlewares/index.js';
 import {
   boardAddSchema,
   boardUpdateSchema,
   boardUpdateBackgroundSchema,
-} from '../../schemas/boards/joiBoardSchema.js';
+} from '../../schemas/Board/schemaJoiBoard.js';
+
+import boardsController from '../../controllers/boards/index.js';
 
 // ============================================================
 

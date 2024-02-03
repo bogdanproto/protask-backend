@@ -1,4 +1,4 @@
-import Board from '../../models/Board.js';
+import { Board } from '../../models/index.js';
 import { successStatus } from '../../const/index.js';
 
 // ============================================================

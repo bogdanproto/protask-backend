@@ -1,8 +1,8 @@
 import { model } from 'mongoose';
 
-import boardSchema from '../schemas/boards/mongooseBoardSchema.js';
-
 import { handleSaveError, addUpdateSettings } from './hooks.js';
+
+import boardSchema from '../schemas/Board/schemaMongooseBoard.js';
 
 // ============================================================
 

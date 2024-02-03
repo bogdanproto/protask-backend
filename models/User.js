@@ -1,7 +1,12 @@
-import { model } from "mongoose";
+import { model } from 'mongoose';
 
-import { SchemaMongooseUser } from "../schema/User/mongoose/index.js";
+import { handleSaveError, addUpdateSettings } from './hooks.js';
+import { SchemaMongooseUser } from '../schemas/User/mongoose/index.js';
 
-const User = model("user", SchemaMongooseUser);
+SchemaMongooseUser.post('save', handleSaveError);
+SchemaMongooseUser.pre('findOneAndUpdate', addUpdateSettings);
+SchemaMongooseUser.post('findOneAndUpdate', handleSaveError);
+
+const User = model('user', SchemaMongooseUser);
 
 export default User;
