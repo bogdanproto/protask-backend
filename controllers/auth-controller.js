@@ -20,6 +20,13 @@ const signup = async (req, res) => {
     const hashPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({ ...req.body, password: hashPassword });
 
+    const { _id: id } = newUser;
+    const payload = {
+        id
+    };
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
+    await User.findByIdAndUpdate(id, {token});
+
     res.status(successStatus.CREATED.status).json({
         ...successStatus.CREATED,
         "data": {
@@ -27,7 +34,8 @@ const signup = async (req, res) => {
                 "userName": newUser.userName,
                 "email": newUser.email,
                 "theme": newUser.theme,
-            }
+            },
+            token,
         }
     })
 }
