@@ -2,7 +2,7 @@ import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import 'dotenv/config';
-import { errorStatus, boardsPath, apiPath, authPath } from './const/index.js';
+import { errorStatus, boardsPath, authPath } from './const/index.js';
 import { handlelibrariesErr } from './helpers/index.js';
 import authRouter from './routes/api/auth-router.js';
 import boardsRouter from './routes/api/boards-router.js';
@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-app.use(`${apiPath}${authPath.BASE}`, authRouter);
+app.use(authPath.ROOT, authRouter);
 app.use(boardsPath.ROOT, boardsRouter);
 
 app.use((req, res) => {

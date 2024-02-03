@@ -30,11 +30,6 @@ const userStatus = {
     code: 'user_unauthorized_by',
     message: 'Email or password is wrong',
   },
-  USER_UNVERIFIED: {
-    status: 401,
-    code: 'user_unverified',
-    message: 'Email not verified',
-  },
   USER_AUTHORIZATIION_TOKEN_MISSING: {
     status: 401,
     code: 'user_authorizatiion_token_missing',
@@ -54,6 +49,11 @@ const userStatus = {
     status: 404,
     code: 'user_not_found',
     message: 'Email not found',
+  },
+  USER_NOT_UPDATED: {
+    status: 404,
+    code: 'user_not_updated',
+    message: 'Could not update user',
   },
   USER_CONFLICT: {
     status: 409,

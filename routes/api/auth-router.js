@@ -2,14 +2,13 @@ import express from 'express';
 
 import { authPath } from '../../const/index.js';
 import authController from '../../controllers/auth-controller.js';
-import { authenticate } from '../../middlewares/index.js';
+import { authenticate, isEmptyBody } from '../../middlewares/index.js';
 import { validateBody } from '../../decorators/index.js';
 import {
   userSignupSchema,
   userSigninSchema,
-  userEmailSchema,
-  // userUpdateSchema,
-} from '../../models/User.js';
+  userUpdateSchema,
+} from '../../schema/User/joi/index.js';
 
 // ============================================================
 
@@ -21,14 +20,6 @@ authRouter.post(
   authController.signup
 );
 
-authRouter.get(authPath.VERIFY_CODE, authController.verify);
-
-authRouter.post(
-  authPath.VERIFY,
-  validateBody(userEmailSchema),
-  authController.resendVerifyEmail
-);
-
 authRouter.post(
   authPath.SIGN_IN,
   validateBody(userSigninSchema),
@@ -37,21 +28,14 @@ authRouter.post(
 
 authRouter.get(authPath.CURRENT, authenticate, authController.getCurrent);
 
-authRouter.post(authPath.SIGNOUT, authenticate, authController.signout);
+authRouter.post(authPath.LOGOUT, authenticate, authController.logout);
 
-// authRouter.patch(
-//   authPath.ROOT,
-//   authenticate,
-//   isEmptyBody,
-//   validateBody(userUpdateSchema),
-//   authController.updateUser
-// );
-
-// authRouter.patch(
-//   authPath.AVATARS,
-//   authenticate,
-//   upload.single('avatar'),
-//   authController.changeAvatar
-// );
+authRouter.patch(
+  authPath.BASE,
+  authenticate,
+  isEmptyBody,
+  validateBody(userUpdateSchema),
+  authController.updateUser
+);
 
 export default authRouter;
