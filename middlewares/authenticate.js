@@ -26,9 +26,7 @@ const authenticate = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    next(
-      HttpError({ ...userStatus.USER_UNAUTHORIZED, message: error.message })
-    );
+    next(HttpError(userStatus.USER_UNAUTHORIZED_TOKEN));
   }
 };
 
