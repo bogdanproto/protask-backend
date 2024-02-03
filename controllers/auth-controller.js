@@ -1,22 +1,14 @@
-import fs from "fs/promises";
-import path from "path";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { nanoid } from "nanoid";
 import "dotenv/config";
-import jimp from "jimp";
 
 import User from "../models/User.js";
 
-import { apiPath, authPath, userStatus, successStatus, emailData } from "../const/index.js";
+import { userStatus, successStatus } from "../const/index.js";
 import httpError from "../helpers/errorHandlers/httpError.js";
-import { sendEmail } from "../helpers/index.js";
 import { ctrlWrapper } from "../decorators/index.js";
 
-const {JWT_SECRET, BASE_URL} = process.env;
-
-const avatarsPath = path.resolve("public", "avatars");
-const verifyEmailLink = BASE_URL + apiPath + authPath.BASE + authPath.VERIFY;
+const {JWT_SECRET} = process.env;
 
 const signup = async (req, res) => {
     const {email, password} = req.body;
@@ -26,14 +18,7 @@ const signup = async (req, res) => {
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
-    const verificationCode = nanoid();
-    const newUser = await User.create({ ...req.body, password: hashPassword, verificationCode });
-    const verifyEmail = {
-        to: email,
-        subject: emailData.SUBJECT,
-        html: `<a target="_blank" href="${verifyEmailLink}/${verificationCode}">${emailData.LINK_TEXT}</a>`
-    }
-    await sendEmail(verifyEmail);
+    const newUser = await User.create({ ...req.body, password: hashPassword });
 
     res.status(successStatus.CREATED.status).json({
         ...successStatus.CREATED,
@@ -47,55 +32,11 @@ const signup = async (req, res) => {
     })
 }
 
-const verify = async(req, res)=> {
-    const {verificationCode} = req.params;
-    console.log(verificationCode);
-    const user = await User.findOne({ verificationCode });
-    if(!user) {
-        throw httpError(userStatus.USER_NOT_FOUND);
-    }
-
-    await User.findByIdAndUpdate(user._id, {verify: true, verificationCode: ""});
-
-    res.status(successStatus.GET.status).json({
-        ...successStatus.GET,
-        message: "Verification successful",
-    })
-}
-
-const resendVerifyEmail = async(req, res)=> {
-    const {email} = req.body;
-    const user = await User.findOne({email});
-    if (!user) {
-        throw httpError(userStatus.USER_NOT_FOUND);
-    }
-    if (user.verify) {
-        throw httpError(userStatus.USER_ALREADY_VERIFIED);
-    }
-
-    const verifyEmail = {
-        to: email,
-        subject: emailData.SUBJECT,
-        html: `<a target="_blank" href="${verifyEmailLink}/${user.verificationCode}">Click to verify email</a>`,
-    }
-
-    await sendEmail(verifyEmail);
-
-    res.status(successStatus.UPDATED.status).json({
-        ...successStatus.UPDATED,
-        message: "Verification email sent"
-    });
-}
-
 const signin = async(req, res)=> {
     const {email, password} = req.body;
     const user = await User.findOne({ email });
     if (!user) {
         throw httpError(userStatus.USER_UNAUTHORIZED);
-    }
-
-    if(!user.verify) {
-        throw httpError(userStatus.USER_UNVERIFIED);
     }
 
     const passwordCompare = await bcrypt.compare(password, user.password);
@@ -176,37 +117,10 @@ const updateUser = async (req, res) => {
     });
 }
 
-const avatar = async (req, res) => {
-    const { _id } = req.user;
-    const { path: oldPath, filename } = req.file;
-    const newPath = path.join(avatarsPath, filename);
-
-    const image = await jimp.read(oldPath);
-
-    await image.resize(250, 250);
-
-    await image.writeAsync(oldPath);
-
-    await fs.rename(oldPath, newPath);
-
-    const avatar = path.join("avatars", filename);
-    const result = await User.findOneAndUpdate(_id, { avatarURL: avatar });
-    if (!result) {
-        throw httpError(404, `Could not update user with id=${_id}`);
-    }
-
-    res.json({
-        "avatarURL": result.avatarURL
-    })
-}
-
 export default {
     signup: ctrlWrapper(signup),
-    verify: ctrlWrapper(verify),
-    resendVerifyEmail: ctrlWrapper(resendVerifyEmail),
     signin: ctrlWrapper(signin),
     getCurrent: ctrlWrapper(getCurrent),
     signout: ctrlWrapper(signout),
-    avatar: ctrlWrapper(avatar),
     updateUser: ctrlWrapper(updateUser),
 }

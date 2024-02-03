@@ -7,7 +7,6 @@ import { validateBody } from '../../decorators/index.js';
 import {
   userSignupSchema,
   userSigninSchema,
-  userEmailSchema,
   userUpdateSchema,
 } from '../../models/User.js';
 
@@ -21,14 +20,6 @@ authRouter.post(
   authController.signup
 );
 
-authRouter.get(authPath.VERIFY_CODE, authController.verify);
-
-authRouter.post(
-  authPath.VERIFY,
-  validateBody(userEmailSchema),
-  authController.resendVerifyEmail
-);
-
 authRouter.post(
   authPath.SIGN_IN,
   validateBody(userSigninSchema),
@@ -40,18 +31,11 @@ authRouter.get(authPath.CURRENT, authenticate, authController.getCurrent);
 authRouter.post(authPath.SIGNOUT, authenticate, authController.signout);
 
 authRouter.patch(
-  authPath.ROOT,
+  authPath.BASE,
   authenticate,
   isEmptyBody,
   validateBody(userUpdateSchema),
   authController.updateUser
 );
-
-// authRouter.patch(
-//   authPath.AVATARS,
-//   authenticate,
-//   upload.single('avatar'),
-//   authController.changeAvatar
-// );
 
 export default authRouter;
