@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-import User from "../../models/User.js";
+import { User } from "../../models/index.js";
 
 import { userStatus } from "../../const/index.js";
 import httpError from "../../helpers/errorHandlers/httpError.js";

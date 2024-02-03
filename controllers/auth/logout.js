@@ -1,4 +1,4 @@
-import User from "../../models/User.js";
+import { User } from "../../models/index.js";
 import { userStatus } from "../../const/index.js";
 
 const logout = async (req, res) => {
