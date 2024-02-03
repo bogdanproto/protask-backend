@@ -8,7 +8,7 @@ import {
   userSignupSchema,
   userSigninSchema,
   userUpdateSchema,
-} from '../../models/User.js';
+} from '../../schema/User/joi/index.js';
 
 // ============================================================
 
