@@ -1,4 +1,13 @@
-// import Board from '../models/Contact.js';
+import Board from '../../models/Board.js';
+import { successStatus } from '../../const/index.js';
+
+// ============================================================
+
+export const getAllBoards = async (req, res) => {
+  const result = await Board.find({}, '-createdAt -updatedAt');
+
+  return res.json({ ...successStatus.GET, data: [...result] });
+};
 
 // // // ============================================================
 
@@ -17,14 +26,3 @@
 
 // ============================================================
 // ============================================================
-
-import * as boardsService from '../../models/index.js';
-import { successStatus } from '../../const/index.js';
-
-// ============================================================
-
-export const getAllBoards = async (req, res) => {
-  const result = await boardsService.getAllBoards();
-
-  return res.json({ ...successStatus.GET, data: [...result] });
-};

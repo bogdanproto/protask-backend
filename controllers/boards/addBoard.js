@@ -1,11 +1,11 @@
-import * as boardsService from '../../models/index.js';
+import Board from '../../models/Board.js';
 
 import { successStatus } from '../../const/index.js';
 
 // ============================================================
 
 export const addBoard = async (req, res) => {
-  const result = await boardsService.addBoard(req.body);
+  const result = await Board.create(req.body);
 
   res.json({ ...successStatus.CREATED_BOARD, data: result });
 };
