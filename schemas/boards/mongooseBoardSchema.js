@@ -14,7 +14,7 @@ const boardSchema = new Schema(
     },
     backgroundImg: {
       // type: Schema.Types.ObjectId,
-      // ref: "wallpaper",
+      // ref: 'wallpaper',
       type: String,
       default: '',
     },
