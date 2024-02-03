@@ -1,6 +1,6 @@
 import { model } from "mongoose";
 
-import { SchemaMongooseUser } from "../schema/User/index.js";
+import { SchemaMongooseUser } from "../schema/User/mongoose/index.js";
 
 const User = model("user", SchemaMongooseUser);
 

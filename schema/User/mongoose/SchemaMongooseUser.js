@@ -1,6 +1,6 @@
 import {Schema} from "mongoose";
-import { handleSaveError, addUpdateSettings } from "../hooks.js";
-import { commonUserValidator } from "../../const/index.js";
+import { handleSaveError, addUpdateSettings } from "../../hooks.js";
+import { commonUserValidator } from "../../../const/index.js";
 
 const SchemaMongooseUser = new Schema({
     userName: {
