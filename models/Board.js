@@ -1,30 +1,14 @@
-import { Schema, model } from 'mongoose';
+import { model } from 'mongoose';
 
-// import { addUpdateSettings, onSaveError } from './hooks.js';
+import boardSchema from '../schemas/boards/mongooseBoardSchema.js';
+
+import { handleSaveError, addUpdateSettings } from './hooks.js';
 
 // ============================================================
 
-const boardSchema = new Schema(
-  {
-    title: {
-      type: String,
-      minLength: 2,
-      maxLength: 30,
-      required: [true, 'Set title for board'],
-    },
-
-    // owner: {
-    //   type: Schema.Types.ObjectId,
-    //   ref: 'user',
-    //   required: true,
-    // },
-  },
-  { versionKey: false }
-);
-
-// contactSchema.post('save', onSaveError);
-// contactSchema.pre('findOneAndUpdate', addUpdateSettings);
-// contactSchema.post('findOneAndUpdate', onSaveError);
+boardSchema.post('save', handleSaveError);
+boardSchema.pre('findOneAndUpdate', addUpdateSettings);
+boardSchema.post('findOneAndUpdate', handleSaveError);
 
 const Board = model('board', boardSchema);
 
