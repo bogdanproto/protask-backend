@@ -2,9 +2,9 @@ import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import 'dotenv/config';
-import { errorStatus, apiPath, authPath } from './const/index.js';
+import { errorStatus, authPath } from './const/index.js';
 import { handlelibrariesErr } from './helpers/index.js';
-import authRouter from "./routes/api/auth-router.js";
+import authRouter from './routes/api/auth-router.js';
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-app.use(`${apiPath}${authPath.BASE}`, authRouter)
+app.use(authPath.ROOT, authRouter);
 
 app.use((req, res) => {
   res.status(errorStatus.NOT_FOUND.status).json(errorStatus.NOT_FOUND);
