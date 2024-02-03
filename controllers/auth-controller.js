@@ -6,14 +6,7 @@ import User from "../models/User.js";
 import { userStatus } from "../const/index.js";
 import httpError from "../helpers/errorHandlers/httpError.js";
 import { ctrlWrapper } from "../decorators/index.js";
-import {signup, signin, getCurrent} from "./auth/index.js";
-
-const logout = async(req, res)=> {
-    const { _id } = req.user;
-    await User.findByIdAndUpdate(_id, {token: ""});
-
-    res.status(userStatus.USER_LOGOUT.status).json(userStatus.USER_LOGOUT);
-}
+import {signup, signin, getCurrent, logout} from "./auth/index.js";
 
 const updateUser = async (req, res) => {
     const { _id } = req.user;
