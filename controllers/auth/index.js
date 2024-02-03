@@ -1,5 +1,15 @@
-export { default as signup } from './signup.js';
-export { default as signin } from './signin.js';
-export { default as getCurrent } from './getCurrent.js';
-export { default as logout } from './logout.js';
-export { default as updateUser } from './updateUser.js';
+import { signup } from './signup.js';
+import { signin } from './signin.js';
+import { getCurrent } from './getCurrent.js';
+import { logout } from './logout.js';
+import { updateUser } from './updateUser.js';
+
+import { ctrlWrapper } from '../../decorators/index.js';
+
+export default {
+  signup: ctrlWrapper(signup),
+  signin: ctrlWrapper(signin),
+  getCurrent: ctrlWrapper(getCurrent),
+  logout: ctrlWrapper(logout),
+  updateUser: ctrlWrapper(updateUser),
+};

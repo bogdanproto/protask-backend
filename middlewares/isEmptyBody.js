@@ -1,12 +1,12 @@
-import { errorStatus } from "../const/index.js";
-import httpError from "../helpers/errorHandlers/httpError.js";
+import { errorStatus } from '../const/index.js';
+import { HttpError } from '../helpers/index.js';
 
-const isEmptyBody = (req, res, next)=> {
-    const {length} = Object.keys(req.body);
-    if(!length) {
-        return next(httpError(errorStatus.BAD_PARAMS));
-    }
-    next();
-}
+const isEmptyBody = (req, res, next) => {
+  const { length } = Object.keys(req.body);
+  if (!length) {
+    return next(HttpError(errorStatus.EMPTY_BODY));
+  }
+  next();
+};
 
 export default isEmptyBody;

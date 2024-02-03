@@ -1,10 +1,15 @@
 import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
+
 import 'dotenv/config';
-import { errorStatus, authPath } from './const/index.js';
+import { errorStatus, authPath, boardsPath } from './const/index.js';
 import { handlelibrariesErr } from './helpers/index.js';
+
 import authRouter from './routes/api/auth-router.js';
+import boardsRouter from './routes/api/boards-router.js';
+
+// ============================================================
 
 const app = express();
 
@@ -16,6 +21,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.use(authPath.ROOT, authRouter);
+app.use(boardsPath.ROOT, boardsRouter);
 
 app.use((req, res) => {
   res.status(errorStatus.NOT_FOUND.status).json(errorStatus.NOT_FOUND);
