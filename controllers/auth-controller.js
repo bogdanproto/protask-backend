@@ -9,8 +9,7 @@ import jimp from "jimp";
 import User from "../models/User.js";
 
 import { apiPath, authPath, userStatus, successStatus, emailData } from "../const/index.js";
-import httpError from "../helpers/errorHandlers/httpError.js";
-import { sendEmail } from "../helpers/index.js";
+import { HttpError, sendEmail } from "../helpers/index.js";
 import { ctrlWrapper } from "../decorators/index.js";
 
 const {JWT_SECRET, BASE_URL} = process.env;
@@ -22,7 +21,7 @@ const signup = async (req, res) => {
     const {email, password} = req.body;
     const user = await User.findOne({email});
     if (user) {
-        throw httpError(userStatus.USER_CONFLICT);
+        throw HttpError(userStatus.USER_CONFLICT);
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
@@ -52,7 +51,7 @@ const verify = async(req, res)=> {
     console.log(verificationCode);
     const user = await User.findOne({ verificationCode });
     if(!user) {
-        throw httpError(userStatus.USER_NOT_FOUND);
+        throw HttpError(userStatus.USER_NOT_FOUND);
     }
 
     await User.findByIdAndUpdate(user._id, {verify: true, verificationCode: ""});
@@ -67,10 +66,10 @@ const resendVerifyEmail = async(req, res)=> {
     const {email} = req.body;
     const user = await User.findOne({email});
     if (!user) {
-        throw httpError(userStatus.USER_NOT_FOUND);
+        throw HttpError(userStatus.USER_NOT_FOUND);
     }
     if (user.verify) {
-        throw httpError(userStatus.USER_ALREADY_VERIFIED);
+        throw HttpError(userStatus.USER_ALREADY_VERIFIED);
     }
 
     const verifyEmail = {
@@ -91,17 +90,17 @@ const signin = async(req, res)=> {
     const {email, password} = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-        throw httpError(userStatus.USER_UNAUTHORIZED);
+        throw HttpError(userStatus.USER_UNAUTHORIZED);
     }
 
     if(!user.verify) {
-        throw httpError(userStatus.USER_UNVERIFIED);
+        throw HttpError(userStatus.USER_UNVERIFIED);
     }
 
     const passwordCompare = await bcrypt.compare(password, user.password);
     
     if (!passwordCompare) {
-        throw httpError(userStatus.USER_UNAUTHORIZED);
+        throw HttpError(userStatus.USER_UNAUTHORIZED);
     }
 
     const {_id: id} = user;
@@ -165,7 +164,7 @@ const avatar = async (req, res) => {
     const avatar = path.join("avatars", filename);
     const result = await User.findOneAndUpdate(_id, { avatarURL: avatar });
     if (!result) {
-        throw httpError(404, `Could not update user with id=${_id}`);
+        throw HttpError(404, `Could not update user with id=${_id}`);
     }
 
     res.json({
