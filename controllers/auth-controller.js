@@ -29,11 +29,12 @@ const signup = async (req, res) => {
 
     res.status(successStatus.CREATED.status).json({
         ...successStatus.CREATED,
-        "data": {
-            "user": {
-                "userName": newUser.userName,
-                "email": newUser.email,
-                "theme": newUser.theme,
+        data: {
+            user: {
+                userName: newUser.userName,
+                email: newUser.email,
+                theme: newUser.theme,
+                avatarCloudURL: newUser.avatarCloudURL,
             },
             token,
         }
@@ -63,12 +64,12 @@ const signin = async(req, res)=> {
 
     res.status(userStatus.USER_LOGIN.status).json({
         ...userStatus.USER_LOGIN,
-        "data": {
+        data: {
             user: {
-                "userName": user.userName,
-                "email": user.email,
-                "theme": user.theme,
-                "avatarCloudURL": user.avatarCloudURL,
+                userName: user.userName,
+                email: user.email,
+                theme: user.theme,
+                avatarCloudURL: user.avatarCloudURL,
             },
             token,
         }
