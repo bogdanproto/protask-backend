@@ -55,6 +55,11 @@ const userStatus = {
     code: 'user_not_found',
     message: 'Email not found',
   },
+  USER_NOT_UPDATED: {
+    status: 404,
+    code: 'user_not_updated',
+    message: 'Could not update user',
+  },
   USER_CONFLICT: {
     status: 409,
     code: 'user_already_exist',

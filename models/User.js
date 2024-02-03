@@ -72,6 +72,7 @@ export const userUpdateSchema = Joi.object({
     userName: Joi.string().min(2),
     password: Joi.string().min(6),
     email: Joi.string().pattern(emailRegexp),
+    theme: Joi.string().valid(...themeList),
 })
 
 const User = model("user", userSchema);

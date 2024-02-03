@@ -2,13 +2,13 @@ import express from 'express';
 
 import { authPath } from '../../const/index.js';
 import authController from '../../controllers/auth-controller.js';
-import { authenticate } from '../../middlewares/index.js';
+import { authenticate, isEmptyBody } from '../../middlewares/index.js';
 import { validateBody } from '../../decorators/index.js';
 import {
   userSignupSchema,
   userSigninSchema,
   userEmailSchema,
-  // userUpdateSchema,
+  userUpdateSchema,
 } from '../../models/User.js';
 
 // ============================================================
@@ -39,13 +39,13 @@ authRouter.get(authPath.CURRENT, authenticate, authController.getCurrent);
 
 authRouter.post(authPath.SIGNOUT, authenticate, authController.signout);
 
-// authRouter.patch(
-//   authPath.ROOT,
-//   authenticate,
-//   isEmptyBody,
-//   validateBody(userUpdateSchema),
-//   authController.updateUser
-// );
+authRouter.patch(
+  authPath.ROOT,
+  authenticate,
+  isEmptyBody,
+  validateBody(userUpdateSchema),
+  authController.updateUser
+);
 
 // authRouter.patch(
 //   authPath.AVATARS,
