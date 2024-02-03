@@ -1,7 +1,8 @@
 const boardsPath = {
   ROOT: '/api/boards',
   BASE: '/',
-  ID: '/:boardId',
+  ID: '/:id',
+  BACKGROUND: '/:id/background',
 };
 
 export default boardsPath;
