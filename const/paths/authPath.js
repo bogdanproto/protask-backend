@@ -4,7 +4,7 @@ const authPath = {
   SIGN_IN: '/signin',
   SIGN_UP: '/signup',
   CURRENT: '/current',
-  SIGNOUT: '/signout',
+  LOGOUT: '/logout',
 };
 
 export default authPath;

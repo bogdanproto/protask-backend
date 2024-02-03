@@ -92,7 +92,7 @@ const getCurrent = async(req, res)=> {
     })
 }
 
-const signout = async(req, res)=> {
+const logout = async(req, res)=> {
     const { _id } = req.user;
     await User.findByIdAndUpdate(_id, {token: ""});
 
@@ -130,6 +130,6 @@ export default {
     signup: ctrlWrapper(signup),
     signin: ctrlWrapper(signin),
     getCurrent: ctrlWrapper(getCurrent),
-    signout: ctrlWrapper(signout),
+    logout: ctrlWrapper(logout),
     updateUser: ctrlWrapper(updateUser),
 }

@@ -28,7 +28,7 @@ authRouter.post(
 
 authRouter.get(authPath.CURRENT, authenticate, authController.getCurrent);
 
-authRouter.post(authPath.SIGNOUT, authenticate, authController.signout);
+authRouter.post(authPath.LOGOUT, authenticate, authController.logout);
 
 authRouter.patch(
   authPath.BASE,
