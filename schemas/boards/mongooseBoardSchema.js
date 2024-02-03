@@ -13,8 +13,15 @@ const boardSchema = new Schema(
       required: [true, 'Set icon for board'],
     },
     backgroundImg: {
+      // type: Schema.Types.ObjectId,
+      // ref: "wallpaper",
       type: String,
       default: '',
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
     },
   },
   {
