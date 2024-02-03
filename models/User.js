@@ -1,48 +1,10 @@
-import {Schema, model} from "mongoose";
+import { model } from "mongoose";
 import Joi from "joi";
 
-import {handleSaveError, addUpdateSettings} from "./hooks.js";
+import { SchemaMongooseUser } from "../schema/User/index.js";
 
 const emailRegexp = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const themeList = ["light", "dark", "violet"];
-
-const userSchema = new Schema({
-    userName: {
-        type: String,
-        required: [true, 'User name is required'],
-        minlength: 2,
-    },
-    email: {
-        type: String,
-        match: emailRegexp,
-        unique: true,
-        required: [true, 'Email is required'],
-    },
-    password: {
-        type: String,
-        required: [true, 'Set password for user'],
-        minlength: 6,
-    },
-    token: {
-        type: String,
-    },
-    avatarCloudURL: {
-        type: String,
-        default: null,
-    },
-    theme: {
-        type: String,
-        enum: themeList,
-        default: "light"
-    },
-
-}, {versionKey: false, timestamps: true});
-
-userSchema.post("save", handleSaveError);
-
-userSchema.pre("findOneAndUpdate", addUpdateSettings);
-
-userSchema.post("findOneAndUpdate", handleSaveError);
 
 export const userSignupSchema = Joi.object({
     userName: Joi.string().min(2).required(),
@@ -62,6 +24,6 @@ export const userUpdateSchema = Joi.object({
     theme: Joi.string().valid(...themeList),
 })
 
-const User = model("user", userSchema);
+const User = model("user", SchemaMongooseUser);
 
 export default User;
