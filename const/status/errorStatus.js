@@ -19,6 +19,12 @@ const errorStatus = {
     message: 'Board Not Found',
   },
 
+  NOT_FOUND_COLUMN: {
+    status: 404,
+    code: 'not_found_board',
+    message: 'Column Not Found',
+  },
+
   BAD_DATA: { status: 400, code: 'bad_data', message: 'Bad Request' },
 
   EMPTY_BODY: { status: 400, code: 'empty_body', message: 'Missing fields' },
@@ -33,6 +39,12 @@ const errorStatus = {
     status: 400,
     code: 'bad_params_board',
     message: 'Params of board are wrong or has wrong type',
+  },
+
+  BAD_PARAMS_COLUMN: {
+    status: 400,
+    code: 'bad_params_column',
+    message: 'Params of column are wrong or has wrong type',
   },
 
   BAD_FILE_EXTENTION: {
