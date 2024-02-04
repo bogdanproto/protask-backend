@@ -1,16 +1,18 @@
 import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
 
 import 'dotenv/config';
 import {
   errorStatus,
+  apiDocsPath,
   authPath,
   boardsPath,
   wallpaperPath,
   columnsPath,
 } from './const/index.js';
-import { handlelibrariesErr } from './helpers/index.js';
+import { handlelibrariesErr, getSwaggerDocument } from './helpers/index.js';
 
 import authRouter from './routes/api/auth-router.js';
 import boardsRouter from './routes/api/boards-router.js';
@@ -27,6 +29,8 @@ app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+
+app.use(apiDocsPath.ROOT, swaggerUi.serve, swaggerUi.setup(getSwaggerDocument()));
 
 app.use(authPath.ROOT, authRouter);
 app.use(boardsPath.ROOT, boardsRouter);
