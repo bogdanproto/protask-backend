@@ -1,5 +1,7 @@
 import { Schema } from 'mongoose';
 
+// ============================================================
+
 const boardSchema = new Schema(
   {
     title: {
