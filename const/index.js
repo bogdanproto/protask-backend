@@ -6,3 +6,4 @@ export { default as successStatus } from './status/successStatus.js';
 export { default as commonUserValidator } from './validators/commonUserValidator.js';
 export { default as wallpaperPath } from './paths/wallpaperPath.js';
 export { default as columnsPath } from './paths/columnsPath.js';
+export { default as cardsPath } from './paths/cardsPath.js';
