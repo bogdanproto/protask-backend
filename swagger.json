@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "2.0.2",
-    "title": "Swagger test",
-    "description": "Showing off swagger-ui-express",
+    "version": "1.0.0",
+    "title": "TaskPro",
+    "description": "TaskPro backend",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -19,17 +19,20 @@
     {
       "name": "Auth",
       "description": "Authorization endpoints"
+    },
+    {
+      "name": "Project",
+      "description": "Projects endpoints"
     }
   ],
   "paths": {
-    "/auth/register": {
+    "/api/auth/signup": {
       "post": {
         "tags": ["Auth"],
-        "summary": "User registration",
+        "summary": "Sign up new user - User registration",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Registration's object",
+          "description": "Registration's object <br># Parameters description:<br>**username** - string, name of user.<br>**email** - string, email of user.<br>**password** - string, encrypted password of user.",
           "required": true,
           "content": {
             "application/json": {
@@ -52,11 +55,74 @@
           },
           "400": {
             "description": "Bad request (invalid request body)",
-            "content": {}
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
           },
           "409": {
             "description": "Provided email already exists",
-            "content": {}
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UserConflict"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Sign in existing user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Login's object <br># Parameters description:<br>**email** - string, email of user.<br>**password** - string, encrypted password of user.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
           }
         }
       }
@@ -65,6 +131,96 @@
   "components": {
     "schemas": {
       "RegistrationRequest": {
+        "type": "object",
+        "required": ["userName", "email", "password"],
+        "properties": {
+          "userName": {
+            "type": "string",
+            "description": "User's name",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 201
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "created"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Created success"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "description": "User's name",
+                                "example": "John Doe"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "User's email",
+                                "format": "email"
+                            },
+                            "theme": {
+                                "type": "string",
+                                "description": "Dasboard's theme",
+                                "example": "light"
+                            },
+                            "avatarCloudURL": {
+                                "type": "string",
+                                "description": "User's avatar URL",
+                                "example": null
+                            }
+                        }
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "JWT token",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmZlZDgxNDI3MzY5MTFiMzFkOTgxYSIsImlhdCI6MTcwNzA3Njk5MywiZXhwIjoxNzA3MTU5NzkzfQ.vSQrEepSMfbSBu1-DGq5KJmGjPiCqXzXTeY0Cr0vL9k"
+                    }
+                }
+            }
+        },
+        "example": {
+            "status": 201,
+            "code": "created",
+            "message": "Created success",
+            "data": {
+                "user": {
+                    "userName": "John Doe",
+                    "email": "user@example.com",
+                    "theme": "light",
+                    "avatarCloudURL": null
+                },
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmZlZDgxNDI3MzY5MTFiMzFkOTgxYSIsImlhdCI6MTcwNzA3Njk5MywiZXhwIjoxNzA3MTU5NzkzfQ.vSQrEepSMfbSBu1-DGq5KJmGjPiCqXzXTeY0Cr0vL9k"
+            }
+        }
+      },
+      "LoginRequest": {
         "type": "object",
         "required": ["email", "password"],
         "properties": {
@@ -80,27 +236,134 @@
           }
         }
       },
-      "RegistrationResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "string",
-              "description": "User's email",
-              "format": "email"
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
             },
-            "userId": {
-              "type": "number",
-              "description": "User's id",
-              "example": "32143232436545474"
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_login_success"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "User is logged in"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "description": "User's name",
+                                "example": "John Doe"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "User's email",
+                                "format": "email"
+                            },
+                            "theme": {
+                                "type": "string",
+                                "description": "Dasboard's theme",
+                                "example": "light"
+                            },
+                            "avatarCloudURL": {
+                                "type": "string",
+                                "description": "User's avatar URL",
+                                "example": null
+                            }
+                        }
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "JWT token",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmZlZDgxNDI3MzY5MTFiMzFkOTgxYSIsImlhdCI6MTcwNzA3Njk5MywiZXhwIjoxNzA3MTU5NzkzfQ.vSQrEepSMfbSBu1-DGq5KJmGjPiCqXzXTeY0Cr0vL9k"
+                    }
+                }
             }
-          }
         },
-        "example": [
-          { "email": "1@gmail.com", "userId": "1" },
-          { "email": "2@gmail.com", "userId": "2" }
-        ]
+        "example": {
+            "status": 200,
+            "code": "user_login_success",
+            "message": "User is logged in",
+            "data": {
+                "user": {
+                    "userName": "John Doe",
+                    "email": "user@example.com",
+                    "theme": "light",
+                    "avatarCloudURL": null
+                },
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmZlZDgxNDI3MzY5MTFiMzFkOTgxYSIsImlhdCI6MTcwNzA3Njk5MywiZXhwIjoxNzA3MTU5NzkzfQ.vSQrEepSMfbSBu1-DGq5KJmGjPiCqXzXTeY0Cr0vL9k"
+            }
+        }
+      },
+      "BadRequest": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Bad request status",
+                "example": 400
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "bad_params"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Params is wrong or has wrong type"
+            }
+        }
+      },
+      "UserConflict": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 409
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_already_exist"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Email already exists"
+            }
+        }
+      },
+      "Unauthorized": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 401
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_unauthorized_by"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Email or password is wrong"
+            }
+        }
       }
     },
     "securitySchemes": {
