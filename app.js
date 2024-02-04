@@ -9,6 +9,7 @@ import {
   boardsPath,
   wallpaperPath,
   columnsPath,
+  cardsPath,
 } from './const/index.js';
 import { handlelibrariesErr } from './helpers/index.js';
 
@@ -16,6 +17,7 @@ import authRouter from './routes/api/auth-router.js';
 import boardsRouter from './routes/api/boards-router.js';
 import wallpaperRouter from './routes/api/wallpapers-router.js';
 import columnsRouter from './routes/api/columns-router.js';
+import cardsRouter from './routes/api/cards-router.js';
 
 // ============================================================
 
@@ -32,6 +34,7 @@ app.use(authPath.ROOT, authRouter);
 app.use(boardsPath.ROOT, boardsRouter);
 app.use(wallpaperPath.ROOT, wallpaperRouter);
 app.use(columnsPath.ROOT, columnsRouter);
+app.use(cardsPath.ROOT, cardsRouter);
 
 app.use((req, res) => {
   res.status(errorStatus.NOT_FOUND.status).json(errorStatus.NOT_FOUND);
