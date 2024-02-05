@@ -25,10 +25,15 @@ const cardSchema = new Schema(
       type: Date,
       default: null,
     },
-    columnId: {
+    column: {
       type: Schema.Types.ObjectId,
       ref: 'column',
       required: [true, 'Required field "columnId" cannot be empty'],
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
     },
   },
   {

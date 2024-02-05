@@ -8,7 +8,7 @@ export const cardGetAllSchema = Joi.object({
   columnId: Joi.string().pattern(objectIdRegexp).required().messages({
     'any.required': 'Required field "columnId" cannot be empty',
     'string.pattern.base':
-      'Validation Error. The parameters of the request are incorrect or have the wrong type',
+      'Validation Error. The "columnId" has incorrect format',
   }),
 });
 
@@ -27,7 +27,7 @@ export const cardAddSchema = Joi.object({
   columnId: Joi.string().pattern(objectIdRegexp).required().messages({
     'any.required': 'Required field "columnId" cannot be empty',
     'string.pattern.base':
-      'Validation Error. The parameters of the request are incorrect or have the wrong type',
+      'Validation Error. The "columnId" has incorrect format',
   }),
 });
 
@@ -43,7 +43,7 @@ export const cardUpdateSchema = Joi.object({
   deadline: Joi.date(),
   columnId: Joi.string().pattern(objectIdRegexp).messages({
     'string.pattern.base':
-      'Validation Error. The parameters of the request are incorrect or have the wrong type',
+      'Validation Error. The "columnId" has incorrect format',
   }),
 });
 
