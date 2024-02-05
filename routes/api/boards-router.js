@@ -10,7 +10,6 @@ import {
 import {
   boardAddSchema,
   boardUpdateSchema,
-  boardUpdateBackgroundSchema,
 } from '../../schemas/Board/schemaJoiBoard.js';
 
 import boardsController from '../../controllers/boards/index.js';
@@ -37,14 +36,6 @@ boardsRouter.put(
   isValidId,
   isEmptyBody,
   validateBody(boardUpdateSchema),
-  boardsController.updateBoard
-);
-
-boardsRouter.patch(
-  boardsPath.BACKGROUND,
-  isValidId,
-  isEmptyBody,
-  validateBody(boardUpdateBackgroundSchema),
   boardsController.updateBoard
 );
 

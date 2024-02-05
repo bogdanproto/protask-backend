@@ -1,12 +1,15 @@
 import Joi from 'joi';
 
+import { objectIdRegexp } from '../../const/index.js';
+
 // ============================================================
 
 export const columnGetAllSchema = Joi.object({
-  board: Joi.string()
-    .length(24)
-    .required()
-    .messages({ 'any.required': 'missing required BOARD field' }),
+  boardId: Joi.string().pattern(objectIdRegexp).required().messages({
+    'any.required': 'Required field "boardId" cannot be empty',
+    'string.pattern.base':
+      'Validation Error. The "boardId" has incorrect format',
+  }),
 });
 
 export const columnAddSchema = Joi.object({
@@ -14,14 +17,14 @@ export const columnAddSchema = Joi.object({
     .min(2)
     .max(60)
     .required()
-    .messages({ 'any.required': 'missing required TITLE field' }),
-  board: Joi.string()
-    .length(24)
-    .required()
-    .messages({ 'any.required': 'missing required BOARD field' }),
+    .messages({ 'any.required': 'Required field "title" cannot be empty' }),
+  boardId: Joi.string().pattern(objectIdRegexp).required().messages({
+    'any.required': 'Required field "boardId" cannot be empty',
+    'string.pattern.base':
+      'Validation Error. The "boardId" has incorrect format',
+  }),
 });
 
 export const columnUpdateSchema = Joi.object({
   title: Joi.string().min(2).max(60),
-  board: Joi.string().length(24),
 });

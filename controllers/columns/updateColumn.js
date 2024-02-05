@@ -1,12 +1,16 @@
 import { Column } from '../../models/index.js';
-import { HttpError } from '../../helpers/index.js';
 import { errorStatus, successStatus } from '../../const/index.js';
+import { HttpError } from '../../helpers/index.js';
 
 // ============================================================
 
 export const updateColumn = async (req, res) => {
   const { id: _id } = req.params;
-  const result = await Column.findByIdAndUpdate(_id, req.body);
+  const { _id: owner } = req.user;
+  const result = await Column.findOneAndUpdate({ _id, owner }, req.body)
+    .populate('board', 'title')
+    .populate('owner', 'userName');
+
   if (!result) {
     throw HttpError(errorStatus.NOT_FOUND_COLUMN);
   }

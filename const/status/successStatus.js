@@ -42,7 +42,7 @@ const successStatus = {
   CREATED_CARD: {
     status: 201,
     code: 'created',
-    message: 'Card created successfully',
+    message: 'Card created successfully.',
   },
 
   UPDATED: {
