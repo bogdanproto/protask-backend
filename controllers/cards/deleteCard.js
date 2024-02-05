@@ -7,7 +7,6 @@ import { HttpError } from '../../helpers/index.js';
 export const deleteCard = async (req, res) => {
   const { id: _id } = req.params;
   const { _id: owner } = req.user;
-
   const result = await Card.findOneAndDelete({ _id, owner });
 
   if (!result) {
