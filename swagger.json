@@ -81,7 +81,6 @@
         "tags": ["Auth"],
         "summary": "Sign in existing user",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Login's object <br># Parameters description:<br>**email** - string, email of user.<br>**password** - string, encrypted password of user.",
           "required": true,
@@ -120,6 +119,37 @@
                 "application/json": {
                 "schema": {
                     "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get current user info",
+        "description": "The \"current\" endpoint is used to retrieve information about the current authorized user.<br>This endpoint returns status, code, message and an object that contains information about the user, such as userName, email, theme, avatarCloudURL.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUser"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
                 }
               }
             }
@@ -305,6 +335,69 @@
             }
         }
       },
+      "CurrentUser": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_authorized"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "User is authorized"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "description": "User's name",
+                                "example": "John Doe"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "User's email",
+                                "format": "email"
+                            },
+                            "theme": {
+                                "type": "string",
+                                "description": "Dasboard's theme",
+                                "example": "light"
+                            },
+                            "avatarCloudURL": {
+                                "type": "string",
+                                "description": "User's avatar URL",
+                                "example": null
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "example": {
+            "status": 200,
+            "code": "user_authorized",
+            "message": "User is authorized",
+            "data": {
+                "user": {
+                    "userName": "John Doe",
+                    "email": "user@example.com",
+                    "theme": "light",
+                    "avatarCloudURL": null
+                }
+            }
+        }
+      },
       "BadRequest": {
         "type": "object",
         "properties": {
@@ -362,6 +455,26 @@
                 "type": "string",
                 "description": "Message of response",
                 "example": "Email or password is wrong"
+            }
+        }
+      },
+      "UnauthorizedToken": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 401
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_unauthorized_token"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "User is not authorized"
             }
         }
       }
