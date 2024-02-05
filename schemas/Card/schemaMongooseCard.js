@@ -1,10 +1,10 @@
 import { Schema } from 'mongoose';
 
-import { iconsList, backgroundsList } from '../../const/index.js';
+import { priorityList } from '../../const/index.js';
 
 // ============================================================
 
-const boardSchema = new Schema(
+const cardSchema = new Schema(
   {
     title: {
       type: String,
@@ -12,16 +12,23 @@ const boardSchema = new Schema(
       maxLength: 60,
       required: [true, 'Required field "title" cannot be empty'],
     },
-    icon: {
+    description: {
       type: String,
-      enum: iconsList,
-      default: 'project',
+      default: '',
     },
-    backgroundImg: {
-      type: Schema.Types.ObjectId,
-      ref: 'wallpaper',
-      enum: backgroundsList,
+    priority: {
+      type: String,
+      enum: priorityList,
+      default: 'without priority',
+    },
+    deadline: {
+      type: Date,
       default: null,
+    },
+    column: {
+      type: Schema.Types.ObjectId,
+      ref: 'column',
+      required: [true, 'Required field "columnId" cannot be empty'],
     },
     owner: {
       type: Schema.Types.ObjectId,
@@ -35,4 +42,4 @@ const boardSchema = new Schema(
   }
 );
 
-export default boardSchema;
+export default cardSchema;

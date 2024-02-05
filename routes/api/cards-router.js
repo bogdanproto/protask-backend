@@ -1,0 +1,50 @@
+import express from 'express';
+
+import { cardsPath } from '../../const/index.js';
+import {
+  authenticate,
+  isValidId,
+  isEmptyBody,
+  validateBody,
+} from '../../middlewares/index.js';
+import {
+  cardGetAllSchema,
+  cardAddSchema,
+  cardUpdateSchema,
+} from '../../schemas/Card/schemaJoiCard.js';
+
+import cardsController from '../../controllers/cards/index.js';
+
+// ============================================================
+
+const cardsRouter = express.Router();
+
+cardsRouter.use(authenticate);
+
+cardsRouter.get(
+  cardsPath.BASE,
+  isEmptyBody,
+  validateBody(cardGetAllSchema),
+  cardsController.getAllCards
+);
+
+cardsRouter.get(cardsPath.ID, isValidId, cardsController.getCardById);
+
+cardsRouter.post(
+  cardsPath.BASE,
+  isEmptyBody,
+  validateBody(cardAddSchema),
+  cardsController.addCard
+);
+
+cardsRouter.put(
+  cardsPath.ID,
+  isValidId,
+  isEmptyBody,
+  validateBody(cardUpdateSchema),
+  cardsController.updateCard
+);
+
+cardsRouter.delete(cardsPath.ID, isValidId, cardsController.deleteCard);
+
+export default cardsRouter;

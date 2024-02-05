@@ -5,14 +5,20 @@ import { HttpError } from '../../helpers/index.js';
 // ============================================================
 
 export const addColumn = async (req, res) => {
-  const { board: boardId } = req.body;
+  const { boardId } = req.body;
+  const { _id: owner } = req.user;
+
   const board = await Board.findById(boardId);
 
   if (!board) {
-    throw HttpError({ ...errorStatus.BAD_PARAMS_COLUMN });
+    throw HttpError({ ...errorStatus.BAD_DATA_BOARDID });
   }
 
-  const result = await Column.create(req.body);
+  const result = await Column.create({ ...req.body, board: boardId, owner });
+
+  if (!result) {
+    throw HttpError({ ...errorStatus.BAD_DATA });
+  }
 
   res.json({ ...successStatus.CREATED_COLUMN, data: result });
 };

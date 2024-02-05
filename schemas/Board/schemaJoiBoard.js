@@ -1,23 +1,40 @@
 import Joi from 'joi';
+import { backgroundsList, iconsList } from '../../const/index.js';
 
 // ============================================================
 
 export const boardAddSchema = Joi.object({
   title: Joi.string()
     .min(2)
-    .max(30)
+    .max(60)
     .required()
-    .messages({ 'any.required': 'missing required TITLE field' }),
+    .messages({ 'any.required': 'Required field "title" cannot be empty' }),
   icon: Joi.string()
-    .required()
-    .messages({ 'any.required': 'missing required ICON field' }),
+    .valid(...iconsList)
+    .messages({
+      'any.only':
+        'The "icon" field must have a valid value: [ "project", "star", "loading", "puzzle", "container", "lightning", "colors", "hexagon"]',
+    }),
+  backgroundImg: Joi.string()
+    .valid(...backgroundsList)
+    .messages({
+      'any.only':
+        'The "backgroundImg" field must have a valid value: [ "project", "star", "loading", "puzzle", "container", "lightning", "colors", "hexagon"]',
+    }),
 });
 
 export const boardUpdateSchema = Joi.object({
-  title: Joi.string().min(2).max(30),
-  icon: Joi.string(),
-});
-
-export const boardUpdateBackgroundSchema = Joi.object({
-  backgroundImg: Joi.string().required(),
+  title: Joi.string().min(2).max(60),
+  icon: Joi.string()
+    .valid(...iconsList)
+    .messages({
+      'any.only':
+        'The "icon" field must have a valid value: [ "project", "star", "loading", "puzzle", "container", "lightning", "colors", "hexagon"]',
+    }),
+  backgroundImg: Joi.string()
+    .valid(...backgroundsList)
+    .messages({
+      'any.only':
+        'The "backgroundImg" field must have a valid value: [ "project", "star", "loading", "puzzle", "container", "lightning", "colors", "hexagon"]',
+    }),
 });

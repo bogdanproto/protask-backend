@@ -19,6 +19,12 @@ const successStatus = {
     message: 'Column deleted successfully',
   },
 
+  DELETED_CARD: {
+    status: 200,
+    code: 'deleted',
+    message: 'Card deleted successfully',
+  },
+
   CREATED: { status: 201, code: 'created', message: 'Created success' },
 
   CREATED_BOARD: {
@@ -31,6 +37,12 @@ const successStatus = {
     status: 201,
     code: 'created',
     message: 'Column created successfully',
+  },
+
+  CREATED_CARD: {
+    status: 201,
+    code: 'created',
+    message: 'Card created successfully.',
   },
 
   UPDATED: {
@@ -49,6 +61,12 @@ const successStatus = {
     status: 200,
     code: 'updated',
     message: 'Column updated successfully',
+  },
+
+  UPDATED_CARD: {
+    status: 200,
+    code: 'updated',
+    message: 'Card updated successfully',
   },
 };
 
