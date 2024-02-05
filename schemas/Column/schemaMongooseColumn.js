@@ -8,11 +8,16 @@ const columnSchema = new Schema(
       type: String,
       minLength: 2,
       maxLength: 60,
-      required: [true, 'Set title for column'],
+      required: [true, 'Required field "title" cannot be empty'],
     },
     board: {
       type: Schema.Types.ObjectId,
       ref: 'board',
+      required: [true, 'Required field "boardId" cannot be empty'],
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
       required: true,
     },
   },
