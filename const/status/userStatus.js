@@ -19,18 +19,12 @@ const userStatus = {
     code: 'user_update_success',
     message: 'Updated success',
   },
-
-  USER_ALREADY_VERIFIED: {
-    status: 400,
-    code: 'user_already_verified',
-    message: 'Verification has already been passed',
-  },
   USER_UNAUTHORIZED: {
     status: 401,
     code: 'user_unauthorized_by',
     message: 'Email or password is wrong',
   },
-  USER_AUTHORIZATIION_TOKEN_MISSING: {
+  USER_AUTHORIZATION_TOKEN_MISSING: {
     status: 401,
     code: 'user_authorizatiion_token_missing',
     message: 'Authorizatiion token missing',

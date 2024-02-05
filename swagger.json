@@ -1,0 +1,685 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "TaskPro",
+    "description": "TaskPro backend",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [
+    { "url": "http://localhost:3000" },
+    { "url": "https://protask-backend.onrender.com" }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Project",
+      "description": "Projects endpoints"
+    }
+  ],
+  "paths": {
+    "/api/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Sign up new user - User registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object <br># Parameters description:<br>**userName** - string, name of user.<br>**email** - string, email of user.<br>**password** - string, secret password of user.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UserConflict"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Sign in existing user",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login's object <br># Parameters description:<br>**email** - string, email of user.<br>**password** - string, secret password of user.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get current user info",
+        "description": "The \"current\" endpoint is used to retrieve information about the current authorized user.<br>This endpoint returns status, code, message and an object that contains information about the user, such as userName, email, theme, avatarCloudURL.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUser"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Update current logged in user.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Updated user's object <br># Parameters description:<br>**userName** - string, name of user.<br>**email** - string, email of user.<br>**password** - string, secret password of user, <br>**theme** - string, one of the list theme of board: [light, dark, violet].",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout existing user",
+        "description": "The logout endpoint is a system exit mechanism that terminates the user's session and destroys the access token that was issued during the previous authentication.<br><br>Description: When a user clicks the logout button, it requests the URL /api/auth/logout with a valid token in the Authorization header.<br>The server checks the validity of the token, if the token is valid, the user's session is closed, the token is removed and the user is returned to the login page. <br>If the token is not valid, the server returns a 401 status and reports that the token is invalid.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["userName", "email", "password"],
+        "properties": {
+          "userName": {
+            "type": "string",
+            "description": "User's name",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 201
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "created"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Created success"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "description": "User's name",
+                                "example": "John Doe"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "User's email",
+                                "format": "email"
+                            },
+                            "theme": {
+                                "type": "string",
+                                "description": "Dasboard's theme",
+                                "example": "light"
+                            },
+                            "avatarCloudURL": {
+                                "type": "string",
+                                "description": "User's avatar URL",
+                                "example": null
+                            }
+                        }
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "JWT token",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmZlZDgxNDI3MzY5MTFiMzFkOTgxYSIsImlhdCI6MTcwNzA3Njk5MywiZXhwIjoxNzA3MTU5NzkzfQ.vSQrEepSMfbSBu1-DGq5KJmGjPiCqXzXTeY0Cr0vL9k"
+                    }
+                }
+            }
+        },
+        "example": {
+            "status": 201,
+            "code": "created",
+            "message": "Created success",
+            "data": {
+                "user": {
+                    "userName": "John Doe",
+                    "email": "user@example.com",
+                    "theme": "light",
+                    "avatarCloudURL": null
+                },
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmZlZDgxNDI3MzY5MTFiMzFkOTgxYSIsImlhdCI6MTcwNzA3Njk5MywiZXhwIjoxNzA3MTU5NzkzfQ.vSQrEepSMfbSBu1-DGq5KJmGjPiCqXzXTeY0Cr0vL9k"
+            }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_login_success"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "User is logged in"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "description": "User's name",
+                                "example": "John Doe"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "User's email",
+                                "format": "email"
+                            },
+                            "theme": {
+                                "type": "string",
+                                "description": "Dasboard's theme",
+                                "example": "light"
+                            },
+                            "avatarCloudURL": {
+                                "type": "string",
+                                "description": "User's avatar URL",
+                                "example": null
+                            }
+                        }
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "JWT token",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmZlZDgxNDI3MzY5MTFiMzFkOTgxYSIsImlhdCI6MTcwNzA3Njk5MywiZXhwIjoxNzA3MTU5NzkzfQ.vSQrEepSMfbSBu1-DGq5KJmGjPiCqXzXTeY0Cr0vL9k"
+                    }
+                }
+            }
+        },
+        "example": {
+            "status": 200,
+            "code": "user_login_success",
+            "message": "User is logged in",
+            "data": {
+                "user": {
+                    "userName": "John Doe",
+                    "email": "user@example.com",
+                    "theme": "light",
+                    "avatarCloudURL": null
+                },
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmZlZDgxNDI3MzY5MTFiMzFkOTgxYSIsImlhdCI6MTcwNzA3Njk5MywiZXhwIjoxNzA3MTU5NzkzfQ.vSQrEepSMfbSBu1-DGq5KJmGjPiCqXzXTeY0Cr0vL9k"
+            }
+        }
+      },
+      "CurrentUser": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_authorized"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "User is authorized"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "description": "User's name",
+                                "example": "John Doe"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "User's email",
+                                "format": "email"
+                            },
+                            "theme": {
+                                "type": "string",
+                                "description": "Dasboard's theme",
+                                "example": "light"
+                            },
+                            "avatarCloudURL": {
+                                "type": "string",
+                                "description": "User's avatar URL",
+                                "example": null
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "example": {
+            "status": 200,
+            "code": "user_authorized",
+            "message": "User is authorized",
+            "data": {
+                "user": {
+                    "userName": "John Doe",
+                    "email": "user@example.com",
+                    "theme": "light",
+                    "avatarCloudURL": null
+                }
+            }
+        }
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "description": "User's name",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "theme": {
+              "type": "string",
+              "description": "Dasboard's theme",
+              "example": "light"
+          }
+        }
+      },
+      "UpdateUserResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_update_success"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Updated success"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "description": "User's name",
+                                "example": "John Doe"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "User's email",
+                                "format": "email"
+                            },
+                            "theme": {
+                                "type": "string",
+                                "description": "Dasboard's theme",
+                                "example": "dark"
+                            },
+                            "avatarCloudURL": {
+                                "type": "string",
+                                "description": "User's avatar URL",
+                                "example": null
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "example": {
+            "status": 200,
+            "code": "user_update_success",
+            "message": "Updated success",
+            "data": {
+                "user": {
+                    "userName": "John Doe",
+                    "email": "user@example.com",
+                    "theme": "dark",
+                    "avatarCloudURL": null
+                }
+            }
+        }
+      },
+      "LogoutResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_logout"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "User is logged out"
+            }
+        },
+        "example": {
+            "status": 200,
+            "code": "user_logout",
+            "message": "User is logged out"
+        }
+      },
+      "BadRequest": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Bad request status",
+                "example": 400
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "bad_params"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Params is wrong or has wrong type"
+            }
+        }
+      },
+      "UserConflict": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 409
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_already_exist"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Email already exists"
+            }
+        }
+      },
+      "Unauthorized": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 401
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_unauthorized_by"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Email or password is wrong"
+            }
+        }
+      },
+      "UnauthorizedToken": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 401
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_unauthorized_token"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "User is not authorized"
+            }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

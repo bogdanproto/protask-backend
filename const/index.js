@@ -1,3 +1,4 @@
+export { default as apiDocsPath } from './paths/apiDocsPath.js';
 export { default as authPath } from './paths/authPath.js';
 export { default as boardsPath } from './paths/boardsPath.js';
 export { default as cardsPath } from './paths/cardsPath.js';

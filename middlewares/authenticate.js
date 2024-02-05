@@ -11,11 +11,11 @@ const { JWT_SECRET } = process.env;
 const authenticate = async (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization) {
-    return next(HttpError(userStatus.USER_AUTHORIZATIION_TOKEN_MISSING));
+    return next(HttpError(userStatus.USER_AUTHORIZATION_TOKEN_MISSING));
   }
   const [bearer, token] = authorization.split(' ');
   if (bearer !== 'Bearer') {
-    return next(HttpError(userStatus.USER_AUTHORIZATIION_TOKEN_MISSING));
+    return next(HttpError(userStatus.USER_AUTHORIZATION_TOKEN_MISSING));
   }
   try {
     const { id } = jwt.verify(token, JWT_SECRET);
