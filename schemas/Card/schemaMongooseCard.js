@@ -1,8 +1,8 @@
 import { Schema } from 'mongoose';
 
-// ============================================================
+import { priorityList } from '../../const/index.js';
 
-const priorityList = ['without priority', 'low', 'medium', 'high'];
+// ============================================================
 
 const cardSchema = new Schema(
   {
@@ -10,10 +10,11 @@ const cardSchema = new Schema(
       type: String,
       minLength: 2,
       maxLength: 60,
-      required: [true, 'Set title for task'],
+      required: [true, 'Required field "title" cannot be empty'],
     },
     description: {
       type: String,
+      default: '',
     },
     priority: {
       type: String,
@@ -22,11 +23,12 @@ const cardSchema = new Schema(
     },
     deadline: {
       type: Date,
+      default: null,
     },
     columnId: {
       type: Schema.Types.ObjectId,
       ref: 'column',
-      required: true,
+      required: [true, 'Required field "columnId" cannot be empty'],
     },
   },
   {

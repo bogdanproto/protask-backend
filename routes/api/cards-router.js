@@ -11,6 +11,8 @@ import {
   cardGetAllSchema,
   cardAddSchema,
   cardUpdateSchema,
+  cardChangePrioritySchema,
+  cardSetDeadlineSchema,
 } from '../../schemas/Card/schemaJoiCard.js';
 
 import cardsController from '../../controllers/cards/index.js';
@@ -42,6 +44,22 @@ cardsRouter.put(
   isValidId,
   isEmptyBody,
   validateBody(cardUpdateSchema),
+  cardsController.updateCard
+);
+
+cardsRouter.patch(
+  cardsPath.PRIORITY,
+  isValidId,
+  isEmptyBody,
+  validateBody(cardChangePrioritySchema),
+  cardsController.updateCard
+);
+
+cardsRouter.patch(
+  cardsPath.DEADLINE,
+  isValidId,
+  isEmptyBody,
+  validateBody(cardSetDeadlineSchema),
   cardsController.updateCard
 );
 

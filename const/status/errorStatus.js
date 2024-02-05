@@ -27,36 +27,35 @@ const errorStatus = {
 
   NOT_FOUND_CARD: {
     status: 404,
-    code: 'not_found_board',
-    message: 'Card Not Found',
+    code: 'not_found_card',
+    message: 'The card with the specified ID was not found',
   },
 
   BAD_DATA: { status: 400, code: 'bad_data', message: 'Bad Request' },
 
-  EMPTY_BODY: { status: 400, code: 'empty_body', message: 'Missing fields' },
+  EMPTY_BODY: {
+    status: 400,
+    code: 'empty_body',
+    message: 'The request body cannot be empty',
+  },
 
   BAD_PARAMS: {
     status: 400,
     code: 'bad_params',
-    message: 'Params is wrong or has wrong type',
+    message:
+      'The parameters of the request are incorrect or have the wrong type',
   },
 
   BAD_PARAMS_BOARD: {
     status: 400,
     code: 'bad_params_board',
-    message: 'Params of board are wrong or has wrong type',
+    message: 'Params of board are wrong or have wrong type',
   },
 
   BAD_PARAMS_COLUMN: {
     status: 400,
     code: 'bad_params_column',
-    message: 'Params of column are wrong or has wrong type',
-  },
-
-  BAD_PARAMS_CARD: {
-    status: 400,
-    code: 'bad_params_column',
-    message: 'Params of card are wrong or has wrong type',
+    message: 'Params of column are wrong or have wrong type',
   },
 
   BAD_FILE_EXTENTION: {

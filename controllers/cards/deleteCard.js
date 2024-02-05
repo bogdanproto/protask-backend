@@ -10,5 +10,5 @@ export const deleteCard = async (req, res) => {
   if (!result) {
     throw HttpError(errorStatus.NOT_FOUND_CARD);
   }
-  res.json({ ...successStatus.DELETED_CARD, data: result.title });
+  res.json({ ...successStatus.DELETED_CARD, data: { title: result.title } });
 };

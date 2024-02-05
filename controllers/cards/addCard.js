@@ -9,7 +9,7 @@ export const addCard = async (req, res) => {
   const column = await Column.findById(columnId);
 
   if (!column) {
-    throw HttpError({ ...errorStatus.BAD_PARAMS_CARD });
+    throw HttpError({ ...errorStatus.BAD_PARAMS });
   }
 
   const result = await Card.create(req.body);
