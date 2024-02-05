@@ -9,3 +9,5 @@ export { default as userStatus } from './status/userStatus.js';
 export { default as commonUserValidator } from './validators/commonUserValidator.js';
 export { default as priorityList } from './validators/priorityList.js';
 export { default as objectIdRegexp } from './validators/objectIdRegexp.js';
+export { default as backgroundsList } from './validators/backgroundsList.js';
+export { default as iconsList } from './validators/iconsList.js';

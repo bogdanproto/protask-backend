@@ -1,5 +1,7 @@
 import { Schema } from 'mongoose';
 
+import { iconsList, backgroundsList } from '../../const/index.js';
+
 // ============================================================
 
 const boardSchema = new Schema(
@@ -7,18 +9,19 @@ const boardSchema = new Schema(
     title: {
       type: String,
       minLength: 2,
-      maxLength: 30,
-      required: [true, 'Set title for board'],
+      maxLength: 60,
+      required: [true, 'Required field "title" cannot be empty'],
     },
     icon: {
       type: String,
-      required: [true, 'Set icon for board'],
+      enum: iconsList,
+      default: 'project',
     },
     backgroundImg: {
-      // type: Schema.Types.ObjectId,
-      // ref: 'wallpaper',
-      type: String,
-      default: '',
+      type: Schema.Types.ObjectId,
+      ref: 'wallpaper',
+      enum: backgroundsList,
+      default: null,
     },
     owner: {
       type: Schema.Types.ObjectId,

@@ -16,13 +16,13 @@ const errorStatus = {
   NOT_FOUND_BOARD: {
     status: 404,
     code: 'not_found_board',
-    message: 'Board Not Found',
+    message: 'The board with the specified ID was not found',
   },
 
   NOT_FOUND_COLUMN: {
     status: 404,
     code: 'not_found_board',
-    message: 'Column Not Found',
+    message: 'The column with the specified ID was not found',
   },
 
   NOT_FOUND_CARD: {
@@ -32,6 +32,20 @@ const errorStatus = {
   },
 
   BAD_DATA: { status: 400, code: 'bad_data', message: 'Bad Request' },
+
+  BAD_DATA_COLUMNID: {
+    status: 400,
+    code: 'bad_data',
+    message:
+      'Incorrect "columnId". Cannot create a card in a column that does not exist',
+  },
+
+  BAD_DATA_BOARDID: {
+    status: 400,
+    code: 'bad_data',
+    message:
+      'Incorrect "boardId". Cannot create a column in a board that does not exist',
+  },
 
   EMPTY_BODY: {
     status: 400,
@@ -50,12 +64,6 @@ const errorStatus = {
     status: 400,
     code: 'bad_params_board',
     message: 'Params of board are wrong or have wrong type',
-  },
-
-  BAD_PARAMS_COLUMN: {
-    status: 400,
-    code: 'bad_params_column',
-    message: 'Params of column are wrong or have wrong type',
   },
 
   BAD_FILE_EXTENTION: {
