@@ -32,7 +32,7 @@
         "summary": "Sign up new user - User registration",
         "parameters": [],
         "requestBody": {
-          "description": "Registration's object <br># Parameters description:<br>**username** - string, name of user.<br>**email** - string, email of user.<br>**password** - string, encrypted password of user.",
+          "description": "Registration's object <br># Parameters description:<br>**userName** - string, name of user.<br>**email** - string, email of user.<br>**password** - string, secret password of user.",
           "required": true,
           "content": {
             "application/json": {
@@ -82,7 +82,7 @@
         "summary": "Sign in existing user",
         "parameters": [],
         "requestBody": {
-          "description": "Login's object <br># Parameters description:<br>**email** - string, email of user.<br>**password** - string, encrypted password of user.",
+          "description": "Login's object <br># Parameters description:<br>**email** - string, email of user.<br>**password** - string, secret password of user.",
           "required": true,
           "content": {
             "application/json": {
@@ -140,6 +140,88 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CurrentUser"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "Update current logged in user.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Updated user's object <br># Parameters description:<br>**userName** - string, name of user.<br>**email** - string, email of user.<br>**password** - string, secret password of user, <br>**theme** - string, one of the list theme of board: [light, dark, violet].",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout existing user",
+        "description": "The logout endpoint is a system exit mechanism that terminates the user's session and destroys the access token that was issued during the previous authentication.<br><br>Description: When a user clicks the logout button, it requests the URL /api/auth/logout with a valid token in the Authorization header.<br>The server checks the validity of the token, if the token is valid, the user's session is closed, the token is removed and the user is returned to the login page. <br>If the token is not valid, the server returns a 401 status and reports that the token is invalid.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutResponse"
                 }
               }
             }
@@ -396,6 +478,119 @@
                     "avatarCloudURL": null
                 }
             }
+        }
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "description": "User's name",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          },
+          "theme": {
+              "type": "string",
+              "description": "Dasboard's theme",
+              "example": "light"
+          }
+        }
+      },
+      "UpdateUserResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_update_success"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Updated success"
+            },
+            "data": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "description": "User's name",
+                                "example": "John Doe"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "User's email",
+                                "format": "email"
+                            },
+                            "theme": {
+                                "type": "string",
+                                "description": "Dasboard's theme",
+                                "example": "dark"
+                            },
+                            "avatarCloudURL": {
+                                "type": "string",
+                                "description": "User's avatar URL",
+                                "example": null
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "example": {
+            "status": 200,
+            "code": "user_update_success",
+            "message": "Updated success",
+            "data": {
+                "user": {
+                    "userName": "John Doe",
+                    "email": "user@example.com",
+                    "theme": "dark",
+                    "avatarCloudURL": null
+                }
+            }
+        }
+      },
+      "LogoutResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_logout"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "User is logged out"
+            }
+        },
+        "example": {
+            "status": 200,
+            "code": "user_logout",
+            "message": "User is logged out"
         }
       },
       "BadRequest": {
