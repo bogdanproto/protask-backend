@@ -46,20 +46,3 @@ export const cardUpdateSchema = Joi.object({
       'Validation Error. The "columnId" has incorrect format',
   }),
 });
-
-export const cardChangePrioritySchema = Joi.object({
-  priority: Joi.string()
-    .valid(...priorityList)
-    .required()
-    .messages({
-      'any.required': 'Required field "priority" cannot be empty',
-      'any.only':
-        'The "priority" field must have a valid value: ["without priority", "low", "medium", "high"]',
-    }),
-});
-
-export const cardSetDeadlineSchema = Joi.object({
-  deadline: Joi.date().required().messages({
-    'any.required': 'Required field "deadline" cannot be empty',
-  }),
-});
