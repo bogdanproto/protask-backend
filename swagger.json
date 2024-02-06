@@ -283,6 +283,46 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": ["Project"],
+        "summary": "Add new board",
+        "description": "Add new board.",
+        "parameters": [],
+        "requestBody": {
+          "description": "New board object <br># Parameters description:<br>**title** - string, name of board.<br>**icon** - string, icon on board, one item from the list: ['project','star','loading','puzzle','container','lightning','colors','hexagon'].<br>**backgroundImg** - string or null.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBoardRequest"
+              }
+            }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBoardResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/boards/{id}": {
@@ -787,43 +827,40 @@
                 "example": "Success"
             },
             "data": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "_id": {
-                    "type": "string",
-                    "description": "Board's ID",
-                    "example": "65c280d17eb9882dc202fc16"
-                  },
-                  "title": {
-                    "type": "string",
-                    "description": "Board's title",
-                    "example": "Board 1"
-                  },
-                  "icon": {
-                    "type": "string",
-                    "enum": [ 
-                      "project",
-                      "star",
-                      "loading",
-                      "puzzle",
-                      "container",
-                      "lightning",
-                      "colors",
-                      "hexagon"
-                    ],
-                    "description": "Board's icon",
-                    "example": "project"
-                  },
-                  "backgroundImg": {
-                    "type": "string",
-                    "description": "Board's icon",
-                    "example": "project"
-                  },
-                  "owner": {
-                    "$ref": "#/components/schemas/PopulatedUser"
-                  }
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Board's ID",
+                  "example": "65c280d17eb9882dc202fc16"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Board's title",
+                  "example": "Board 1"
+                },
+                "icon": {
+                  "type": "string",
+                  "enum": [ 
+                    "project",
+                    "star",
+                    "loading",
+                    "puzzle",
+                    "container",
+                    "lightning",
+                    "colors",
+                    "hexagon"
+                  ],
+                  "description": "Board's icon",
+                  "example": "project"
+                },
+                "backgroundImg": {
+                  "type": "string",
+                  "description": "Board's background image",
+                  "example": null
+                },
+                "owner": {
+                  "$ref": "#/components/schemas/PopulatedUser"
                 }
               }
             }
@@ -832,18 +869,131 @@
             "status": 200,
             "code": "ok",
             "message": "Success",
-            "data": [
-              {
+            "data": {
+              "_id": "65c280d17eb9882dc202fc16",
+              "title": "Board 1",
+              "icon": "project",
+              "backgroundImg": null,
+              "owner": {
+                  "_id": "65be3614cd039701052f2de9",
+                  "userName": "John Doe"
+              }
+            }
+        }
+      },
+      "CreateBoardRequest": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Board's title",
+            "example": "Board 1"
+          },
+          "icon": {
+            "type": "string",
+            "enum": [ 
+              "project",
+              "star",
+              "loading",
+              "puzzle",
+              "container",
+              "lightning",
+              "colors",
+              "hexagon"
+            ],
+            "description": "Board's icon",
+            "example": "project"
+          },
+          "backgroundImg": {
+            "type": "string",
+            "description": "Board's background image",
+            "example": null
+          }
+        }
+      },
+      "CreateBoardResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 201
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "created"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Board created successfully"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Board's ID",
+                  "example": "65c280d17eb9882dc202fc16"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Board's title",
+                  "example": "Board 1"
+                },
+                "icon": {
+                  "type": "string",
+                  "enum": [ 
+                    "project",
+                    "star",
+                    "loading",
+                    "puzzle",
+                    "container",
+                    "lightning",
+                    "colors",
+                    "hexagon"
+                  ],
+                  "description": "Board's icon",
+                  "example": "project"
+                },
+                "backgroundImg": {
+                  "type": "string",
+                  "description": "Board's background image",
+                  "example": null
+                },
+                "owner": {
+                  "type": "string",
+                  "description": "Owner's ID",
+                  "example": "65be3614cd039701052f2de9"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "description": "Board created at",
+                  "example": "2024-02-06T19:03:24.206Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "description": "Board updated at",
+                  "example": "2024-02-06T19:03:24.206Z"
+                }
+              }
+            }
+        },
+        "example": {
+            "status": 201,
+            "code": "created",
+            "message": "Board created successfully",
+            "data": {
                 "_id": "65c280d17eb9882dc202fc16",
                 "title": "Board 1",
                 "icon": "project",
                 "backgroundImg": null,
-                "owner": {
-                    "_id": "65be3614cd039701052f2de9",
-                    "userName": "John Doe"
-                }
+                "owner": "65be3614cd039701052f2de9",
+                "createdAt": "2024-02-06T19:03:24.206Z",
+                "updatedAt": "2024-02-06T19:03:24.206Z"
               }
-            ]
         }
       },
       "NotFoundBoard": {
