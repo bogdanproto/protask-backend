@@ -1,39 +1,28 @@
 import multer from 'multer';
 import path from 'path';
 
-import { errorStatus } from '../const/index.js';
-import { HttpError } from '../helpers/index.js';
+const pathTemp = path.join(process.cwd(), process.env.DIR_TEMP);
 
-const destination = path.resolve('temp');
 const storage = multer.diskStorage({
-  destination,
-  filename: (rec, file, callback) => {
-    const uniquePreffix = `${Date.now()}_${Math.round(Math.random() * 1e9)}`;
-    const filename = `${uniquePreffix}_${file.originalname}`;
-    callback(null, filename);
+  destination: function (req, file, cb) {
+    cb(null, pathTemp);
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
   },
 });
 
-const limits = {
-  fileSize: 1024 * 1024 * 5,
-};
-
-const fileFilter = (req, file, callback) => {
-  const extention = req.originalname.split('.').pop();
-  if (extention === 'exe') {
-    callback(
-      HttpError(
-        errorStatus.BAD_FILE_EXTENTION.status,
-        `.exe ${errorStatus.BAD_FILE_EXTENTION.message}`
-      )
-    );
-  }
-};
-
 const upload = multer({
-  storage,
-  limits,
-  fileFilter,
+  storage: storage,
+  limits: { fileSize: 1500000 },
+  fileFilter: function fileFilter(req, file, cb) {
+    if (!file.mimetype.startsWith('image/')) {
+      cb(null, false);
+      cb(new multer.MulterError('File should be only image'));
+      return;
+    }
+    cb(null, true);
+  },
 });
 
 export default upload;

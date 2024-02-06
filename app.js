@@ -12,6 +12,7 @@ import {
   wallpaperPath,
   columnsPath,
   cardsPath,
+  userPath,
 } from './const/index.js';
 import { handlelibrariesErr, getSwaggerDocument } from './helpers/index.js';
 
@@ -20,6 +21,7 @@ import boardsRouter from './routes/api/boards-router.js';
 import wallpaperRouter from './routes/api/wallpapers-router.js';
 import columnsRouter from './routes/api/columns-router.js';
 import cardsRouter from './routes/api/cards-router.js';
+import userRouter from './routes/api/user-router.js';
 
 // ============================================================
 
@@ -32,9 +34,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-app.use(apiDocsPath.ROOT, swaggerUi.serve, swaggerUi.setup(getSwaggerDocument()));
+app.use(
+  apiDocsPath.ROOT,
+  swaggerUi.serve,
+  swaggerUi.setup(getSwaggerDocument())
+);
 
 app.use(authPath.ROOT, authRouter);
+app.use(userPath.ROOT, userRouter);
 app.use(boardsPath.ROOT, boardsRouter);
 app.use(wallpaperPath.ROOT, wallpaperRouter);
 app.use(columnsPath.ROOT, columnsRouter);
