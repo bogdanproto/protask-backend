@@ -284,6 +284,55 @@
           }
         }
       }
+    },
+    "/api/boards/{id}": {
+      "get": {
+        "tags": ["Project"],
+        "summary": "Get board by id",
+        "description": "Get board by id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of board"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBoardResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/NotFoundBoard"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -654,6 +703,99 @@
               "items": {
                 "type": "object",
                 "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Board's ID",
+                    "example": "65c280d17eb9882dc202fc16"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Board's title",
+                    "example": "Board 1"
+                  },
+                  "icon": {
+                    "type": "string",
+                    "enum": [ 
+                      "project",
+                      "star",
+                      "loading",
+                      "puzzle",
+                      "container",
+                      "lightning",
+                      "colors",
+                      "hexagon"
+                    ],
+                    "description": "Board's icon",
+                    "example": "project"
+                  },
+                  "backgroundImg": {
+                    "type": "string",
+                    "description": "Board's background image",
+                    "example": null
+                  },
+                  "owner": {
+                    "$ref": "#/components/schemas/PopulatedUser"
+                  }
+                }
+              }
+            }
+        },
+        "example": {
+            "status": 200,
+            "code": "ok",
+            "message": "Success",
+            "data": [
+              {
+                "_id": "65c280d17eb9882dc202fc16",
+                "title": "Board 1",
+                "icon": "project",
+                "backgroundImg": null,
+                "owner": {
+                    "_id": "65be3614cd039701052f2de9",
+                    "userName": "John Doe"
+                }
+              },
+              {
+                "_id": "65c2827c12f5f1bb4e53b1cd",
+                "title": "Board 2",
+                "icon": "star",
+                "backgroundImg": null,
+                "owner": {
+                    "_id": "65be3614cd039701052f2de9",
+                    "userName": "John Doe"
+                }
+              }
+            ]
+        }
+      },
+      "GetBoardResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "ok"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Success"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "_id": {
+                    "type": "string",
+                    "description": "Board's ID",
+                    "example": "65c280d17eb9882dc202fc16"
+                  },
                   "title": {
                     "type": "string",
                     "description": "Board's title",
@@ -680,7 +822,7 @@
                     "example": "project"
                   },
                   "owner": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/PopulatedUser"
                   }
                 }
               }
@@ -692,28 +834,36 @@
             "message": "Success",
             "data": [
               {
+                "_id": "65c280d17eb9882dc202fc16",
                 "title": "Board 1",
                 "icon": "project",
                 "backgroundImg": null,
                 "owner": {
-                    "userName": "John Doe",
-                    "email": "user@example.com",
-                    "theme": "light",
-                    "avatarCloudURL": null
-                }
-              },
-              {
-                "title": "Board 2",
-                "icon": "star",
-                "backgroundImg": null,
-                "owner": {
-                    "userName": "John Doe",
-                    "email": "user@example.com",
-                    "theme": "light",
-                    "avatarCloudURL": null
+                    "_id": "65be3614cd039701052f2de9",
+                    "userName": "John Doe"
                 }
               }
             ]
+        }
+      },
+      "NotFoundBoard": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 404
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "not_found_board"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "The board with the specified ID was not found"
+            }
         }
       },
       "User": {
@@ -738,6 +888,21 @@
                 "type": "string",
                 "description": "User's avatar URL",
                 "example": null
+            }
+        }
+      },
+      "PopulatedUser": {
+        "type": "object",
+        "properties": {
+            "_id": {
+                "type": "string",
+                "description": "User's ID",
+                "format": "65be3614cd039701052f2de9"
+            },
+            "userName": {
+                "type": "string",
+                "description": "User's name",
+                "example": "John Doe"
             }
         }
       }
