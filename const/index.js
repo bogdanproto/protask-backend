@@ -12,3 +12,4 @@ export { default as priorityList } from './validators/priorityList.js';
 export { default as objectIdRegexp } from './validators/objectIdRegexp.js';
 export { default as backgroundsList } from './validators/backgroundsList.js';
 export { default as iconsList } from './validators/iconsList.js';
+export { default as userPath } from './paths/userPath.js';

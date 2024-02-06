@@ -17,7 +17,7 @@ const SchemaMongooseUser = new Schema(
     password: {
       type: String,
       required: [true, 'Set password for user'],
-      minlength: 6,
+      minlength: 8,
     },
     token: {
       type: String,
@@ -29,7 +29,7 @@ const SchemaMongooseUser = new Schema(
     theme: {
       type: String,
       enum: commonUserValidator.THEME_LIST,
-      default: 'light',
+      default: commonUserValidator.THEME_LIST[0],
     },
   },
   { versionKey: false, timestamps: true }

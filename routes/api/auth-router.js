@@ -9,7 +9,6 @@ import {
 import {
   userSignupSchema,
   userSigninSchema,
-  userUpdateSchema,
 } from '../../schemas/User/joi/index.js';
 
 import authController from '../../controllers/auth/index.js';
@@ -35,13 +34,5 @@ authRouter.post(
 authRouter.get(authPath.CURRENT, authenticate, authController.getCurrent);
 
 authRouter.post(authPath.LOGOUT, authenticate, authController.logout);
-
-authRouter.patch(
-  authPath.BASE,
-  authenticate,
-  isEmptyBody,
-  validateBody(userUpdateSchema),
-  authController.updateUser
-);
 
 export default authRouter;
