@@ -238,6 +238,52 @@
           }
         }
       }
+    },
+    "/api/boards/": {
+      "get": {
+        "tags": ["Project"],
+        "summary": "Get all boards",
+        "description": "Get all boards.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "Number of page"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "Number of boards per page"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllBoardsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -672,6 +718,116 @@
                 "example": "User is not authorized"
             }
         }
+      },
+      "GetAllBoardsResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "ok"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Success"
+            },
+            "data": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "description": "Board's title",
+                    "example": "Board 1"
+                  },
+                  "icon": {
+                    "type": "string",
+                    "enum": [ 
+                      "project",
+                      "star",
+                      "loading",
+                      "puzzle",
+                      "container",
+                      "lightning",
+                      "colors",
+                      "hexagon"
+                    ],
+                    "description": "Board's icon",
+                    "example": "project"
+                  },
+                  "backgroundImg": {
+                    "type": "string",
+                    "description": "Board's icon",
+                    "example": "project"
+                  },
+                  "owner": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+        },
+        "example": {
+            "status": 200,
+            "code": "ok",
+            "message": "Success",
+            "data": [
+              {
+                "title": "Board 1",
+                "icon": "project",
+                "backgroundImg": null,
+                "owner": {
+                    "userName": "John Doe",
+                    "email": "user@example.com",
+                    "theme": "light",
+                    "avatarCloudURL": null
+                }
+              },
+              {
+                "title": "Board 2",
+                "icon": "star",
+                "backgroundImg": null,
+                "owner": {
+                    "userName": "John Doe",
+                    "email": "user@example.com",
+                    "theme": "light",
+                    "avatarCloudURL": null
+                }
+              }
+            ]
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+            "userName": {
+                "type": "string",
+                "description": "User's name",
+                "example": "John Doe"
+            },
+            "email": {
+                "type": "string",
+                "description": "User's email",
+                "format": "email"
+            },
+            "theme": {
+                "type": "string",
+                "description": "Dasboard's theme",
+                "example": "light"
+            },
+            "avatarCloudURL": {
+                "type": "string",
+                "description": "User's avatar URL",
+                "example": null
+            }
+      }
       }
     },
     "securitySchemes": {
