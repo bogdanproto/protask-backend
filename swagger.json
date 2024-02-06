@@ -331,29 +331,7 @@
                 "type": "object",
                 "properties": {
                     "user": {
-                        "type": "object",
-                        "properties": {
-                            "userName": {
-                                "type": "string",
-                                "description": "User's name",
-                                "example": "John Doe"
-                            },
-                            "email": {
-                                "type": "string",
-                                "description": "User's email",
-                                "format": "email"
-                            },
-                            "theme": {
-                                "type": "string",
-                                "description": "Dasboard's theme",
-                                "example": "light"
-                            },
-                            "avatarCloudURL": {
-                                "type": "string",
-                                "description": "User's avatar URL",
-                                "example": null
-                            }
-                        }
+                      "$ref": "#/components/schemas/User"
                     },
                     "token": {
                         "type": "string",
@@ -416,29 +394,7 @@
                 "type": "object",
                 "properties": {
                     "user": {
-                        "type": "object",
-                        "properties": {
-                            "userName": {
-                                "type": "string",
-                                "description": "User's name",
-                                "example": "John Doe"
-                            },
-                            "email": {
-                                "type": "string",
-                                "description": "User's email",
-                                "format": "email"
-                            },
-                            "theme": {
-                                "type": "string",
-                                "description": "Dasboard's theme",
-                                "example": "light"
-                            },
-                            "avatarCloudURL": {
-                                "type": "string",
-                                "description": "User's avatar URL",
-                                "example": null
-                            }
-                        }
+                      "$ref": "#/components/schemas/User"
                     },
                     "token": {
                         "type": "string",
@@ -485,29 +441,7 @@
                 "type": "object",
                 "properties": {
                     "user": {
-                        "type": "object",
-                        "properties": {
-                            "userName": {
-                                "type": "string",
-                                "description": "User's name",
-                                "example": "John Doe"
-                            },
-                            "email": {
-                                "type": "string",
-                                "description": "User's email",
-                                "format": "email"
-                            },
-                            "theme": {
-                                "type": "string",
-                                "description": "Dasboard's theme",
-                                "example": "light"
-                            },
-                            "avatarCloudURL": {
-                                "type": "string",
-                                "description": "User's avatar URL",
-                                "example": null
-                            }
-                        }
+                      "$ref": "#/components/schemas/User"
                     }
                 }
             }
@@ -573,29 +507,7 @@
                 "type": "object",
                 "properties": {
                     "user": {
-                        "type": "object",
-                        "properties": {
-                            "userName": {
-                                "type": "string",
-                                "description": "User's name",
-                                "example": "John Doe"
-                            },
-                            "email": {
-                                "type": "string",
-                                "description": "User's email",
-                                "format": "email"
-                            },
-                            "theme": {
-                                "type": "string",
-                                "description": "Dasboard's theme",
-                                "example": "dark"
-                            },
-                            "avatarCloudURL": {
-                                "type": "string",
-                                "description": "User's avatar URL",
-                                "example": null
-                            }
-                        }
+                      "$ref": "#/components/schemas/User"
                     }
                 }
             }
@@ -827,7 +739,7 @@
                 "description": "User's avatar URL",
                 "example": null
             }
-      }
+        }
       }
     },
     "securitySchemes": {
