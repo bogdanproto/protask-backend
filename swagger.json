@@ -21,8 +21,8 @@
       "description": "Authorization endpoints"
     },
     {
-      "name": "Project",
-      "description": "Projects endpoints"
+      "name": "Board",
+      "description": "Board endpoints"
     }
   ],
   "paths": {
@@ -241,7 +241,7 @@
     },
     "/api/boards/": {
       "get": {
-        "tags": ["Project"],
+        "tags": ["Board"],
         "summary": "Get all boards",
         "description": "Get all boards.",
         "parameters": [
@@ -285,7 +285,7 @@
         }
       },
       "post": {
-        "tags": ["Project"],
+        "tags": ["Board"],
         "summary": "Add new board",
         "description": "Add new board.",
         "parameters": [],
@@ -327,7 +327,7 @@
     },
     "/api/boards/{id}": {
       "get": {
-        "tags": ["Project"],
+        "tags": ["Board"],
         "summary": "Get board by id",
         "description": "Get board by id.",
         "parameters": [
