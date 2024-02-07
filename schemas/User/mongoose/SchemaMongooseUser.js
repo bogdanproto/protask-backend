@@ -31,7 +31,7 @@ const SchemaMongooseUser = new Schema(
       enum: commonUserValidator.THEME_LIST,
       default: commonUserValidator.THEME_LIST[0],
     },
-    boards: [{ type: Schema.Types.ObjectId, ref: 'boards' }],
+    boards: [{ type: Schema.Types.ObjectId, ref: 'board' }],
   },
   { versionKey: false, timestamps: true }
 );

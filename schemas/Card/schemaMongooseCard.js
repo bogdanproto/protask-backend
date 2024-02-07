@@ -32,7 +32,7 @@ const cardSchema = new Schema(
     },
     board: {
       type: Schema.Types.ObjectId,
-      ref: 'column',
+      ref: 'board',
     },
     owner: {
       type: Schema.Types.ObjectId,

@@ -10,10 +10,19 @@ export const getBoardById = async (req, res) => {
   const result = await Board.findOne(
     { _id, owner },
     '-createdAt -updatedAt -owner'
-  ).populate('backgroundImg', [
-    'desktopCloudURL',
-    'tabletCloudURL',
-    'mobileCloudURL',
+  ).populate([
+    {
+      path: 'backgroundImg',
+      select: 'desktopCloudURL tabletCloudURL mobileCloudURL',
+    },
+    {
+      path: 'columns',
+      select: 'title',
+      populate: {
+        path: 'cards',
+        select: 'title description priority deadline',
+      },
+    },
   ]);
 
   if (!result) {

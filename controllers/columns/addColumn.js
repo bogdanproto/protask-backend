@@ -15,6 +15,7 @@ export const addColumn = async (req, res) => {
   }
 
   const result = await Column.create({ ...req.body, board: boardId, owner });
+  const { _id, title } = result;
 
   if (!result) {
     throw HttpError({ ...errorStatus.BAD_DATA });
@@ -22,5 +23,5 @@ export const addColumn = async (req, res) => {
 
   await board.updateOne({ $push: { columns: result._id } });
 
-  res.json({ ...successStatus.CREATED_COLUMN, data: result });
+  res.json({ ...successStatus.CREATED_COLUMN, data: { _id, title } });
 };
