@@ -11,6 +11,7 @@ import {
   cardGetAllSchema,
   cardAddSchema,
   cardUpdateSchema,
+  cardChangeColumnSchema,
 } from '../../schemas/Card/schemaJoiCard.js';
 
 import cardsController from '../../controllers/cards/index.js';
@@ -43,6 +44,14 @@ cardsRouter.put(
   isEmptyBody,
   validateBody(cardUpdateSchema),
   cardsController.updateCard
+);
+
+cardsRouter.patch(
+  cardsPath.CHANGE_COLUMN,
+  isValidId,
+  isEmptyBody,
+  validateBody(cardChangeColumnSchema),
+  cardsController.changeColumn
 );
 
 cardsRouter.delete(cardsPath.ID, isValidId, cardsController.deleteCard);

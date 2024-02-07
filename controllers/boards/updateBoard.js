@@ -8,9 +8,15 @@ export const updateBoard = async (req, res) => {
   const { id: _id } = req.params;
   const { _id: owner } = req.user;
   const result = await Board.findOneAndUpdate({ _id, owner }, req.body);
+
   if (!result) {
     throw HttpError(errorStatus.NOT_FOUND_BOARD);
   }
 
-  res.json({ ...successStatus.UPDATED_BOARD, data: result });
+  const { title, icon, backgroundImg } = result;
+
+  res.json({
+    ...successStatus.UPDATED_BOARD,
+    data: { _id: result._id, title, icon, backgroundImg },
+  });
 };

@@ -4,7 +4,7 @@
 // console.log(backgroundsList);
 
 const backgroundsList = [
-  '',
+  null,
   '65bd63bfbe42db36576cef07',
   '65bd64121f0dd29462525104',
   '65bd646ad035ace54f9fbacc',

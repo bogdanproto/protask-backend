@@ -10,14 +10,12 @@ export const getAllColumns = async (req, res) => {
   const skip = (page - 1) * limit;
   const result = await Column.find(
     { board: boardId, owner },
-    '-createdAt -updatedAt',
+    '-createdAt -updatedAt -board -owner',
     {
       skip,
       limit,
     }
-  )
-    .populate('board', 'title')
-    .populate('owner', 'userName');
+  );
 
   res.json({ ...successStatus.GET, data: [...result] });
 };

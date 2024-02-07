@@ -10,14 +10,12 @@ export const getAllCards = async (req, res) => {
   const skip = (page - 1) * limit;
   const result = await Card.find(
     { column: columnId, owner },
-    '-createdAt -updatedAt',
+    '-createdAt -updatedAt -board -owner',
     {
       skip,
       limit,
     }
-  )
-    .populate('column', 'title')
-    .populate('owner', 'userName');
+  );
 
   res.json({ ...successStatus.GET, data: [...result] });
 };

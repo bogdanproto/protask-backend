@@ -4,6 +4,7 @@ const cardsPath = {
   ID: '/:id',
   PRIORITY: '/:id/priority',
   DEADLINE: '/:id/deadline',
+  CHANGE_COLUMN: '/:id/changecolumn',
 };
 
 export default cardsPath;

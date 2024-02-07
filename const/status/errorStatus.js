@@ -40,6 +40,13 @@ const errorStatus = {
       'Incorrect "columnId". Cannot create a card in a column that does not exist',
   },
 
+  BAD_DATA_CARD_MOVE: {
+    status: 400,
+    code: 'bad_data',
+    message:
+      'Incorrect "columnId". Cannot move the card in a column that does not exist',
+  },
+
   BAD_DATA_BOARDID: {
     status: 400,
     code: 'bad_data',
