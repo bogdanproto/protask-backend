@@ -1,4 +1,4 @@
-import { Board, Column } from '../../models/index.js';
+import { Board, Column, Card } from '../../models/index.js';
 import { HttpError } from '../../helpers/index.js';
 import { errorStatus, successStatus } from '../../const/index.js';
 
@@ -14,6 +14,7 @@ export const deleteBoard = async (req, res) => {
   }
 
   await Column.deleteMany({ board: _id, owner });
+  await Card.deleteMany({ board: _id, owner });
 
-  res.json({ ...successStatus.DELETED_BOARD, data: result });
+  res.json({ ...successStatus.DELETED_BOARD, data: result.title });
 };

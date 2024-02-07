@@ -28,6 +28,7 @@ const boardSchema = new Schema(
       ref: 'user',
       required: true,
     },
+    columns: [{ type: Schema.Types.ObjectId, ref: 'columns' }],
   },
   {
     versionKey: false,

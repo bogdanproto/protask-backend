@@ -46,3 +46,10 @@ export const cardUpdateSchema = Joi.object({
       'Validation Error. The "columnId" has incorrect format',
   }),
 });
+
+export const cardChangeColumnSchema = Joi.object({
+  columnId: Joi.string().pattern(objectIdRegexp).required().messages({
+    'string.pattern.base':
+      'Validation Error. The "columnId" has incorrect format',
+  }),
+});

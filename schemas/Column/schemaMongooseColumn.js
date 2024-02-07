@@ -20,6 +20,7 @@ const columnSchema = new Schema(
       ref: 'user',
       required: true,
     },
+    cards: [{ type: Schema.Types.ObjectId, ref: 'cards' }],
   },
   {
     versionKey: false,

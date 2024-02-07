@@ -68,6 +68,12 @@ const successStatus = {
     code: 'updated',
     message: 'Card updated successfully',
   },
+
+  UPDATED_CARD_MOVE: {
+    status: 200,
+    code: 'moved',
+    message: 'Card moved successfully',
+  },
 };
 
 export default successStatus;
