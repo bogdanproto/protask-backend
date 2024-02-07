@@ -290,7 +290,7 @@
         "description": "Add new board.",
         "parameters": [],
         "requestBody": {
-          "description": "New board object <br># Parameters description:<br>**title** - string, name of board.<br>**icon** - string, icon on board, one item from the list: ['project','star','loading','puzzle','container','lightning','colors','hexagon'].<br>**backgroundImg** - string or null.",
+          "description": "New board object <br># Parameters description:<br>**title** - string, name of board.<br>**icon** - string, icon on board, one item from the list: ['project','star','loading','puzzle','container','lightning','colors','hexagon'].<br>**backgroundImg** - string or null, wallpaper ID one of the list: <br>[<br>'',<br>'65bd63bfbe42db36576cef07',<br>'65bd64121f0dd29462525104',<br>'65bd646ad035ace54f9fbacc',<br>'65bd64a469dbfedb2b4fa649',<br>'65bd64fd19bce60b401cf9d0',<br>'65bd65322d32baf543f90857',<br>'65bd65616080dd83c4663229',<br>'65bd65dcd834d8796ff702d2',<br>'65bd662514ed70443b11a44c',<br>'65bd66635e770c355ed96f01',<br>'65bd669ae0b3b2e70db649aa',<br>'65bd66cd66783926d5bb0d2f',<br>'65bd66fb61efbfb9a9bcc0a9',<br>'65bd672d2dd95dfda4b5dc66',<br>'65bd67578697af865db4fbf7'<br>]",
           "required": true,
           "content": {
             "application/json": {
@@ -873,12 +873,30 @@
                     "description": "Board's icon",
                     "example": "project"
                   },
-                  "backgroundImg": {
-                    "type": "string",
-                    "description": "Board's background image",
-                    "example": null
-                  },
-                  "owner": {
+                "backgroundImg": {
+                  "type": "string",
+                  "enum": [
+                    "''",
+                    "65bd63bfbe42db36576cef07",
+                    "65bd64121f0dd29462525104",
+                    "65bd646ad035ace54f9fbacc",
+                    "65bd64a469dbfedb2b4fa649",
+                    "65bd64fd19bce60b401cf9d0",
+                    "65bd65322d32baf543f90857",
+                    "65bd65616080dd83c4663229",
+                    "65bd65dcd834d8796ff702d2",
+                    "65bd662514ed70443b11a44c",
+                    "65bd66635e770c355ed96f01",
+                    "65bd669ae0b3b2e70db649aa",
+                    "65bd66cd66783926d5bb0d2f",
+                    "65bd66fb61efbfb9a9bcc0a9",
+                    "65bd672d2dd95dfda4b5dc66",
+                    "65bd67578697af865db4fbf7"
+                  ],
+                  "description": "Board's background image",
+                  "example": "65bd67578697af865db4fbf7"
+                },
+                "owner": {
                     "$ref": "#/components/schemas/PopulatedUser"
                   }
                 }
@@ -894,7 +912,7 @@
                 "_id": "65c280d17eb9882dc202fc16",
                 "title": "Board 1",
                 "icon": "project",
-                "backgroundImg": null,
+                "backgroundImg": "65bd67578697af865db4fbf7",
                 "owner": {
                     "_id": "65be3614cd039701052f2de9",
                     "userName": "John Doe"
@@ -904,7 +922,7 @@
                 "_id": "65c2827c12f5f1bb4e53b1cd",
                 "title": "Board 2",
                 "icon": "star",
-                "backgroundImg": null,
+                "backgroundImg": "65bd67578697af865db4fbf7",
                 "owner": {
                     "_id": "65be3614cd039701052f2de9",
                     "userName": "John Doe"
@@ -961,8 +979,26 @@
                 },
                 "backgroundImg": {
                   "type": "string",
+                  "enum": [
+                    "''",
+                    "65bd63bfbe42db36576cef07",
+                    "65bd64121f0dd29462525104",
+                    "65bd646ad035ace54f9fbacc",
+                    "65bd64a469dbfedb2b4fa649",
+                    "65bd64fd19bce60b401cf9d0",
+                    "65bd65322d32baf543f90857",
+                    "65bd65616080dd83c4663229",
+                    "65bd65dcd834d8796ff702d2",
+                    "65bd662514ed70443b11a44c",
+                    "65bd66635e770c355ed96f01",
+                    "65bd669ae0b3b2e70db649aa",
+                    "65bd66cd66783926d5bb0d2f",
+                    "65bd66fb61efbfb9a9bcc0a9",
+                    "65bd672d2dd95dfda4b5dc66",
+                    "65bd67578697af865db4fbf7"
+                  ],
                   "description": "Board's background image",
-                  "example": null
+                  "example": "65bd67578697af865db4fbf7"
                 },
                 "owner": {
                   "$ref": "#/components/schemas/PopulatedUser"
@@ -978,7 +1014,7 @@
               "_id": "65c280d17eb9882dc202fc16",
               "title": "Board 1",
               "icon": "project",
-              "backgroundImg": null,
+              "backgroundImg": "65bd67578697af865db4fbf7",
               "owner": {
                   "_id": "65be3614cd039701052f2de9",
                   "userName": "John Doe"
@@ -1012,8 +1048,26 @@
           },
           "backgroundImg": {
             "type": "string",
+            "enum": [
+              "''",
+              "65bd63bfbe42db36576cef07",
+              "65bd64121f0dd29462525104",
+              "65bd646ad035ace54f9fbacc",
+              "65bd64a469dbfedb2b4fa649",
+              "65bd64fd19bce60b401cf9d0",
+              "65bd65322d32baf543f90857",
+              "65bd65616080dd83c4663229",
+              "65bd65dcd834d8796ff702d2",
+              "65bd662514ed70443b11a44c",
+              "65bd66635e770c355ed96f01",
+              "65bd669ae0b3b2e70db649aa",
+              "65bd66cd66783926d5bb0d2f",
+              "65bd66fb61efbfb9a9bcc0a9",
+              "65bd672d2dd95dfda4b5dc66",
+              "65bd67578697af865db4fbf7"
+            ],
             "description": "Board's background image",
-            "example": null
+            "example": "65bd67578697af865db4fbf7"
           }
         }
       },
@@ -1065,8 +1119,26 @@
                 },
                 "backgroundImg": {
                   "type": "string",
+                  "enum": [
+                    "''",
+                    "65bd63bfbe42db36576cef07",
+                    "65bd64121f0dd29462525104",
+                    "65bd646ad035ace54f9fbacc",
+                    "65bd64a469dbfedb2b4fa649",
+                    "65bd64fd19bce60b401cf9d0",
+                    "65bd65322d32baf543f90857",
+                    "65bd65616080dd83c4663229",
+                    "65bd65dcd834d8796ff702d2",
+                    "65bd662514ed70443b11a44c",
+                    "65bd66635e770c355ed96f01",
+                    "65bd669ae0b3b2e70db649aa",
+                    "65bd66cd66783926d5bb0d2f",
+                    "65bd66fb61efbfb9a9bcc0a9",
+                    "65bd672d2dd95dfda4b5dc66",
+                    "65bd67578697af865db4fbf7"
+                  ],
                   "description": "Board's background image",
-                  "example": null
+                  "example": "65bd67578697af865db4fbf7"
                 },
                 "owner": {
                   "type": "string",
@@ -1094,7 +1166,7 @@
                 "_id": "65c280d17eb9882dc202fc16",
                 "title": "Board 1",
                 "icon": "project",
-                "backgroundImg": null,
+                "backgroundImg": "65bd67578697af865db4fbf7",
                 "owner": "65be3614cd039701052f2de9",
                 "createdAt": "2024-02-06T19:03:24.206Z",
                 "updatedAt": "2024-02-06T19:03:24.206Z"
@@ -1128,7 +1200,7 @@
           "backgroundImg": {
             "type": "string",
             "enum": [
-              "",
+              "''",
               "65bd63bfbe42db36576cef07",
               "65bd64121f0dd29462525104",
               "65bd646ad035ace54f9fbacc",
@@ -1199,7 +1271,7 @@
                 "backgroundImg": {
                   "type": "string",
                   "enum": [
-                    "",
+                    "''",
                     "65bd63bfbe42db36576cef07",
                     "65bd64121f0dd29462525104",
                     "65bd646ad035ace54f9fbacc",
@@ -1301,7 +1373,7 @@
                 "backgroundImg": {
                   "type": "string",
                   "enum": [
-                    "",
+                    "''",
                     "65bd63bfbe42db36576cef07",
                     "65bd64121f0dd29462525104",
                     "65bd646ad035ace54f9fbacc",
