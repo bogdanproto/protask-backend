@@ -21,7 +21,7 @@ const boardSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'wallpaper',
       enum: backgroundsList,
-      default: null,
+      default: backgroundsList[0],
     },
     owner: {
       type: Schema.Types.ObjectId,
