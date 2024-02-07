@@ -26,8 +26,13 @@ export const changeColumn = async (req, res) => {
     throw HttpError({ ...errorStatus.BAD_DATA });
   }
 
+  const { title, description, priority, deadline, column } = result;
+
   await prevColumn.updateOne({ $pull: { cards: result._id } });
   await nextColumn.updateOne({ $push: { cards: result._id } });
 
-  res.json({ ...successStatus.UPDATED_CARD_MOVE, data: result });
+  res.json({
+    ...successStatus.UPDATED_CARD_MOVE,
+    data: { _id: result._id, title, description, priority, deadline, column },
+  });
 };

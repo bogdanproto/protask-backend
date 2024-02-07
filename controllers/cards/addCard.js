@@ -27,7 +27,19 @@ export const addCard = async (req, res) => {
     throw HttpError({ ...errorStatus.BAD_DATA });
   }
 
+  const { _id, title, description, priority, deadline } = result;
+
   await column.updateOne({ $push: { cards: result._id } });
 
-  res.json({ ...successStatus.CREATED_CARD, data: result });
+  res.json({
+    ...successStatus.CREATED_CARD,
+    data: {
+      _id,
+      title,
+      description,
+      priority,
+      deadline,
+      column: result.column,
+    },
+  });
 };

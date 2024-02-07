@@ -9,14 +9,15 @@ export const deleteCard = async (req, res) => {
   const { _id: owner } = req.user;
 
   const card = await Card.findOne({ _id, owner });
-  const column = await Column.findOne({ _id: card.column, owner });
-  const result = await card.deleteOne();
 
-  if (!result) {
+  if (!card) {
     throw HttpError(errorStatus.NOT_FOUND_CARD);
   }
+  const column = await Column.findOne({ _id: card.column, owner });
+  const { title } = card;
 
+  await card.deleteOne();
   await column.updateOne({ $pull: { cards: card._id } });
 
-  res.json({ ...successStatus.DELETED_CARD, data: { title: card.title } });
+  res.json({ ...successStatus.DELETED_CARD, data: { title } });
 };

@@ -17,10 +17,10 @@ export const getBoardById = async (req, res) => {
     },
     {
       path: 'columns',
-      select: 'title',
+      select: '_id title',
       populate: {
         path: 'cards',
-        select: 'title description priority deadline',
+        select: '_id title description priority deadline',
       },
     },
   ]);
