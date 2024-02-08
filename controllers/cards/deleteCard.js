@@ -19,5 +19,8 @@ export const deleteCard = async (req, res) => {
   await card.deleteOne();
   await column.updateOne({ $pull: { cards: card._id } });
 
-  res.json({ ...successStatus.DELETED_CARD, data: { _id, title } });
+  res.json({
+    ...successStatus.DELETED_CARD,
+    data: { _id, title, column: column._id },
+  });
 };
