@@ -16,6 +16,6 @@ export const updateColumn = async (req, res) => {
 
   res.json({
     ...successStatus.UPDATED_COLUMN,
-    data: { _id: result._id, title, cards },
+    data: { _id, title, cards },
   });
 };

@@ -14,12 +14,10 @@ export const addCard = async (req, res) => {
     throw HttpError({ ...errorStatus.BAD_DATA_COLUMNID });
   }
 
-  const board = column.board;
-
   const result = await Card.create({
     ...req.body,
     column: columnId,
-    board,
+    board: column.board,
     owner,
   });
 

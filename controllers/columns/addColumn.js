@@ -8,7 +8,7 @@ export const addColumn = async (req, res) => {
   const { boardId } = req.body;
   const { _id: owner } = req.user;
 
-  const board = await Board.findById(boardId);
+  const board = await Board.findOne({ _id: boardId, owner });
 
   if (!board) {
     throw HttpError({ ...errorStatus.BAD_DATA_BOARDID });

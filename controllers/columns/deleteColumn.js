@@ -21,5 +21,5 @@ export const deleteColumn = async (req, res) => {
   await board.updateOne({ $pull: { columns: column._id } });
   await Card.deleteMany({ column: _id, owner });
 
-  res.json({ ...successStatus.DELETED_COLUMN, data: { title } });
+  res.json({ ...successStatus.DELETED_COLUMN, data: { _id, title } });
 };

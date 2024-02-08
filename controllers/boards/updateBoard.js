@@ -17,6 +17,6 @@ export const updateBoard = async (req, res) => {
 
   res.json({
     ...successStatus.UPDATED_BOARD,
-    data: { _id: result._id, title, icon, backgroundImg },
+    data: { _id, title, icon, backgroundImg },
   });
 };
