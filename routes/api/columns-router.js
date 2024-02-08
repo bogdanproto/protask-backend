@@ -9,7 +9,6 @@ import {
 } from '../../middlewares/index.js';
 import {
   columnAddSchema,
-  columnGetAllSchema,
   columnUpdateSchema,
 } from '../../schemas/Column/schemaJoiColumn.js';
 
@@ -21,12 +20,7 @@ const columnsRouter = express.Router();
 
 columnsRouter.use(authenticate);
 
-columnsRouter.get(
-  columnsPath.BASE,
-  isEmptyBody,
-  validateBody(columnGetAllSchema),
-  columnsController.getAllColumns
-);
+columnsRouter.get(columnsPath.BASE, columnsController.getAllColumns);
 
 columnsRouter.get(columnsPath.ID, isValidId, columnsController.getColumnById);
 

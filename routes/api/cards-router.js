@@ -8,7 +8,6 @@ import {
   validateBody,
 } from '../../middlewares/index.js';
 import {
-  cardGetAllSchema,
   cardAddSchema,
   cardUpdateSchema,
   cardChangeColumnSchema,
@@ -22,12 +21,7 @@ const cardsRouter = express.Router();
 
 cardsRouter.use(authenticate);
 
-cardsRouter.get(
-  cardsPath.BASE,
-  isEmptyBody,
-  validateBody(cardGetAllSchema),
-  cardsController.getAllCards
-);
+cardsRouter.get(cardsPath.BASE, cardsController.getAllCards);
 
 cardsRouter.get(cardsPath.ID, isValidId, cardsController.getCardById);
 

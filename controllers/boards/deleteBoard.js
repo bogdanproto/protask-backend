@@ -21,5 +21,5 @@ export const deleteBoard = async (req, res) => {
   await Column.deleteMany({ board: _id, owner });
   await Card.deleteMany({ board: _id, owner });
 
-  res.json({ ...successStatus.DELETED_BOARD, data: { title } });
+  res.json({ ...successStatus.DELETED_BOARD, data: { _id, title } });
 };

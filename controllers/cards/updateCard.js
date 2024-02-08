@@ -7,6 +7,7 @@ import { HttpError } from '../../helpers/index.js';
 export const updateCard = async (req, res) => {
   const { id: _id } = req.params;
   const { _id: owner } = req.user;
+
   const result = await Card.findOneAndUpdate({ _id, owner }, req.body);
 
   if (!result) {
@@ -17,6 +18,6 @@ export const updateCard = async (req, res) => {
 
   res.json({
     ...successStatus.UPDATED_CARD,
-    data: { _id: result._id, title, description, priority, deadline, column },
+    data: { _id, title, description, priority, deadline, column },
   });
 };

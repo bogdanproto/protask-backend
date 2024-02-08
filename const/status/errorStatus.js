@@ -21,7 +21,7 @@ const errorStatus = {
 
   NOT_FOUND_COLUMN: {
     status: 404,
-    code: 'not_found_board',
+    code: 'not_found_column',
     message: 'The column with the specified ID was not found',
   },
 

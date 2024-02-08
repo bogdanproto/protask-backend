@@ -28,11 +28,11 @@ export const changeColumn = async (req, res) => {
 
   const { title, description, priority, deadline, column } = result;
 
-  await prevColumn.updateOne({ $pull: { cards: result._id } });
-  await nextColumn.updateOne({ $push: { cards: result._id } });
+  await prevColumn.updateOne({ $pull: { cards: _id } });
+  await nextColumn.updateOne({ $push: { cards: _id } });
 
   res.json({
     ...successStatus.UPDATED_CARD_MOVE,
-    data: { _id: result._id, title, description, priority, deadline, column },
+    data: { _id, title, description, priority, deadline, column },
   });
 };
