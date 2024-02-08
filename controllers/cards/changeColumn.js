@@ -33,6 +33,14 @@ export const changeColumn = async (req, res) => {
 
   res.json({
     ...successStatus.UPDATED_CARD_MOVE,
-    data: { _id, title, description, priority, deadline, column },
+    data: {
+      _id,
+      title,
+      description,
+      priority,
+      deadline,
+      column,
+      prevColumn: prevColumn._id,
+    },
   });
 };
