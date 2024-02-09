@@ -18,11 +18,5 @@ export const userProfileSchema = Joi.object({
   userName: Joi.string().min(2),
   email: Joi.string().pattern(commonUserValidator.EMAIL_REGEXP),
   newPassword: Joi.string().min(8),
-  currentPassword: Joi.string()
-    .min(8)
-    .when('newPassword', {
-      is: Joi.exist(),
-      then: Joi.required('currentPassword is required'),
-      otherwise: Joi.optional(),
-    }),
+  currentPassword: Joi.string().min(8),
 });

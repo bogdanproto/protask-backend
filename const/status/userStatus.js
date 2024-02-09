@@ -19,6 +19,11 @@ const userStatus = {
     code: 'user_update_success',
     message: 'Updated success',
   },
+  USER_BAD_DATA_PASSWORD: {
+    status: 400,
+    code: 'bad_data',
+    message: 'Password is required',
+  },
   USER_UNAUTHORIZED: {
     status: 401,
     code: 'user_unauthorized_by',
