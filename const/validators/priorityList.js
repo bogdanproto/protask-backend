@@ -1,3 +1,3 @@
-const priorityList = ['without priority', 'low', 'medium', 'high'];
+const priorityList = ['without', 'low', 'medium', 'high'];
 
 export default priorityList;
