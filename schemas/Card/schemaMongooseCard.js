@@ -19,7 +19,7 @@ const cardSchema = new Schema(
     priority: {
       type: String,
       enum: priorityList,
-      default: 'without priority',
+      default: 'without',
     },
     deadline: {
       type: Date,
