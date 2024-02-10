@@ -23,5 +23,5 @@ export const addColumn = async (req, res) => {
 
   await board.updateOne({ $push: { columns: result._id } });
 
-  res.json({ ...successStatus.CREATED_COLUMN, data: { _id, title } });
+  res.status(successStatus.CREATED_COLUMN.status).json({ ...successStatus.CREATED_COLUMN, data: { _id, title } });
 };
