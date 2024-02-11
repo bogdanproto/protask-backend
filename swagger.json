@@ -21,6 +21,10 @@
       "description": "Authorization endpoints"
     },
     {
+      "name": "Wallpaper",
+      "description": "Wallpaper endpoints"
+    },
+    {
       "name": "Board",
       "description": "Board endpoints"
     },
@@ -230,6 +234,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/LogoutResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/wallpaper/": {
+      "get": {
+        "tags": ["Wallpaper"],
+        "summary": "Get all wallpapers",
+        "description": "Get all wallpapers.",
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllWallpapersResponse"
                 }
               }
             }
@@ -1505,6 +1539,80 @@
                 "description": "Message of response",
                 "example": "User is not authorized"
             }
+        }
+      },
+      "GetAllWallpapersResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+              "type": "number",
+              "description": "Status of response",
+              "example": 200
+          },
+          "code": {
+              "type": "string",
+              "description": "Code of response",
+              "example": "ok"
+          },
+          "message": {
+              "type": "string",
+              "description": "Message of response",
+              "example": "Success"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Wallpaper's ID",
+                  "example": "65bd63bfbe42db36576cef07"
+                },
+                "desktopCloudURL": {
+                  "type": "string",
+                  "description": "Wallpaper's desktop cloud URL",
+                  "example": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908680/wallpapers/bg_desktop_optimize/bg9_desktop_hxjgym.jpg"
+                },
+                "tabletCloudURL": {
+                  "type": "string",
+                  "description": "Wallpaper's tablet cloud URL",
+                  "example": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908676/wallpapers/bg_tablet_optimize/bg9_tablet_m8lpsv.jpg"
+                },
+                "mobileCloudURL": {
+                  "type": "string",
+                  "description": "Wallpaper's mobile cloud URL",
+                  "example": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908669/wallpapers/bg_mobile_optimize/bg12_mobile_rympkb.jpg"
+                },
+                "iconCloudURL": {
+                  "type": "string",
+                  "description": "Wallpaper's icon cloud URL",
+                  "example": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908667/wallpapers/bg_icons/bg7_icon_yfeouz.jpg"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "status": 200,
+          "code": "ok",
+          "message": "Success",
+          "data": [
+            {
+                "_id": "65bd63bfbe42db36576cef07",
+                "desktopCloudURL": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908680/wallpapers/bg_desktop_optimize/bg9_desktop_hxjgym.jpg",
+                "tabletCloudURL": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908676/wallpapers/bg_tablet_optimize/bg9_tablet_m8lpsv.jpg",
+                "mobileCloudURL": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908669/wallpapers/bg_mobile_optimize/bg12_mobile_rympkb.jpg",
+                "iconCloudURL": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908667/wallpapers/bg_icons/bg7_icon_yfeouz.jpg"
+            },
+            {
+                "_id": "65bd64121f0dd29462525104",
+                "desktopCloudURL": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908679/wallpapers/bg_desktop_optimize/bg8_desktop_zckerz.jpg",
+                "tabletCloudURL": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908675/wallpapers/bg_tablet_optimize/bg8_tablet_fkrlfx.jpg",
+                "mobileCloudURL": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908669/wallpapers/bg_mobile_optimize/bg15_mobile_ozylqj.jpg",
+                "iconCloudURL": "https://res.cloudinary.com/duzywelcr/image/upload/v1706908665/wallpapers/bg_icons/bg4_icon_emsvg7.jpg"
+            }
+          ]
         }
       },
       "GetAllBoardsResponse": {
