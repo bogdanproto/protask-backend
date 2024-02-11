@@ -29,15 +29,17 @@ export const addCard = async (req, res) => {
 
   await column.updateOne({ $push: { cards: result._id } });
 
-  res.json({
-    ...successStatus.CREATED_CARD,
-    data: {
-      _id,
-      title,
-      description,
-      priority,
-      deadline,
-      column: result.column,
-    },
-  });
+  res
+    .status(successStatus.CREATED_CARD.status)
+    .json({
+      ...successStatus.CREATED_CARD,
+      data: {
+        _id,
+        title,
+        description,
+        priority,
+        deadline,
+        column: result.column,
+      },
+    });
 };
