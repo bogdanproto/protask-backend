@@ -21,6 +21,10 @@
       "description": "Authorization endpoints"
     },
     {
+      "name": "User",
+      "description": "User endpoints"
+    },
+    {
       "name": "Wallpaper",
       "description": "Wallpaper endpoints"
     },
@@ -244,6 +248,183 @@
                 "application/json": {
                 "schema": {
                     "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/profile": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Updated user profile",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Updated user object <br># Parameters description:<br>**userName** - string, name of user.<br>**email** - string, email of user.<br>**newPassword** - string, secret newPassword of user.<br>**currentPassword** - string, secret currentPassword of user.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserProfileRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserProfileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+                "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/BadRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UserBadDataPassword"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UserConflict"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/theme": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update user theme",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User theme<br># Parameters description:<br>**theme** - string, one of the list theme of board: [light, dark, violet].",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserThemeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserThemeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+                "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/avatar": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Update user avatar",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User avatar<br># Parameters description:<br>**avatar** - binary, image for user profile avatar.",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["avatar"],
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUserAvatarResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Error: Unsupported Media Type",
+            "content": {
+                "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnsupportedMediaType"
                 }
               }
             }
@@ -1323,7 +1504,7 @@
                     "userName": "John Doe",
                     "email": "user@example.com",
                     "theme": "light",
-                    "avatarCloudURL": null
+                    "avatarCloudURL": "http://res.cloudinary.com/duzywelcr/image/upload/v1707677603/avatars/65c08a94dcac052d973a19b7.jpg"
                 },
                 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1YmZlZDgxNDI3MzY5MTFiMzFkOTgxYSIsImlhdCI6MTcwNzA3Njk5MywiZXhwIjoxNzA3MTU5NzkzfQ.vSQrEepSMfbSBu1-DGq5KJmGjPiCqXzXTeY0Cr0vL9k"
             }
@@ -1365,7 +1546,7 @@
                     "userName": "John Doe",
                     "email": "user@example.com",
                     "theme": "light",
-                    "avatarCloudURL": null
+                    "avatarCloudURL": "http://res.cloudinary.com/duzywelcr/image/upload/v1707677603/avatars/65c08a94dcac052d973a19b7.jpg"
                 }
             }
         }
@@ -1389,9 +1570,14 @@
             "example": "qwerty123"
           },
           "theme": {
-              "type": "string",
-              "description": "Dasboard's theme",
-              "example": "light"
+            "type": "string",
+            "enum": [
+              "light",
+              "dark",
+              "violet"
+            ],
+            "description": "User's theme",
+            "example": "light"
           }
         }
       },
@@ -1431,7 +1617,7 @@
                     "userName": "John Doe",
                     "email": "user@example.com",
                     "theme": "dark",
-                    "avatarCloudURL": null
+                    "avatarCloudURL": "http://res.cloudinary.com/duzywelcr/image/upload/v1707677603/avatars/65c08a94dcac052d973a19b7.jpg"
                 }
             }
         }
@@ -1459,6 +1645,218 @@
             "status": 200,
             "code": "user_logout",
             "message": "User is logged out"
+        }
+      },
+      "UpdateUserProfileRequest": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "description": "User's name",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "User's new password",
+            "example": "qwerty123456"
+          },
+          "currentPassword": {
+            "type": "string",
+            "description": "User's current Password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "UpdateUserProfileResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+              "type": "number",
+              "description": "Status of response",
+              "example": 200
+          },
+          "code": {
+              "type": "string",
+              "description": "Code of response",
+              "example": "user_update_success"
+          },
+          "message": {
+              "type": "string",
+              "description": "Message of response",
+              "example": "Updated success"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "userName": {
+                    "type": "string",
+                    "description": "User's name",
+                    "example": "John Doe"
+                  },
+                  "email": {
+                      "type": "string",
+                      "description": "User's email",
+                      "format": "email"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "status": 200,
+          "code": "user_update_success",
+          "message": "Updated success",
+          "data": {
+            "user": {
+                "userName": "John Doe",
+                "email": "user@example.com"
+            }
+          }
+        }
+      },
+      "UserBadDataPassword": {
+        "type": "object",
+        "properties": {
+          "status": {
+              "type": "number",
+              "description": "Bad request status",
+              "example": 400
+          },
+          "code": {
+              "type": "string",
+              "description": "Code of response",
+              "example": "bad_data"
+          },
+          "message": {
+              "type": "string",
+              "description": "Message of response",
+              "example": "Password is required"
+          }
+        }
+      },
+      "UpdateUserThemeRequest": {
+        "type": "object",
+        "properties": {
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "dark",
+              "violet"
+            ],
+            "description": "User's theme",
+            "example": "light"
+          }
+        }
+      },
+      "UpdateUserThemeResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_update_success"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Updated success"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "theme": {
+                  "type": "string",
+                  "enum": [
+                    "light",
+                    "dark",
+                    "violet"
+                  ],
+                  "description": "User's theme",
+                  "example": "light"
+                }
+              }
+            }
+        },
+        "example": {
+          "status": 200,
+          "code": "user_update_success",
+          "message": "Updated success",
+          "data": {
+            "theme": "violet"
+          }
+        }
+      },
+      "UpdateUserAvatarResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "user_update_success"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Updated success"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "avatarCloudURL": {
+                  "type": "string",
+                  "description": "User's avatar",
+                  "example": "http://res.cloudinary.com/duzywelcr/image/upload/v1707677603/avatars/65c08a94dcac052d973a19b7.jpg"
+                }
+              }
+            }
+        },
+        "example": {
+          "status": 200,
+          "code": "user_update_success",
+          "message": "Updated success",
+          "data": {
+            "avatarCloudURL": "http://res.cloudinary.com/duzywelcr/image/upload/v1707677603/avatars/65c08a94dcac052d973a19b7.jpg"
+          }
+        }
+      },
+      "UnsupportedMediaType": {
+        "type": "object",
+        "properties": {
+          "status": {
+              "type": "number",
+              "description": "Unsupported Media Type",
+              "example": 415
+          },
+          "code": {
+              "type": "string",
+              "description": "Code of response",
+              "example": "File should be only image"
+          },
+          "message": {
+              "type": "string",
+              "description": "Message of response",
+              "example": "File should be only image"
+          }
         }
       },
       "BadRequest": {
@@ -3185,14 +3583,19 @@
                 "format": "email"
             },
             "theme": {
-                "type": "string",
-                "description": "Dasboard's theme",
-                "example": "light"
+              "type": "string",
+              "enum": [
+                "light",
+                "dark",
+                "violet"
+              ],
+              "description": "User's theme",
+              "example": "light"
             },
             "avatarCloudURL": {
                 "type": "string",
                 "description": "User's avatar URL",
-                "example": null
+                "example": "http://res.cloudinary.com/duzywelcr/image/upload/v1707677603/avatars/65c08a94dcac052d973a19b7.jpg"
             }
         }
       },
