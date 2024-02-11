@@ -23,6 +23,10 @@
     {
       "name": "Board",
       "description": "Board endpoints"
+    },
+    {
+      "name": "Column",
+      "description": "Column endpoints"
     }
   ],
   "paths": {
@@ -472,6 +476,303 @@
                 "application/json": {
                 "schema": {
                     "$ref": "#/components/schemas/NotFoundBoard"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/columns/": {
+      "get": {
+        "tags": ["Column"],
+        "summary": "Get all columns",
+        "description": "Get all columns.",
+        "parameters": [
+          {
+            "name": "boardId",
+            "in": "query",
+            "required": true,
+            "type": "integer",
+            "description": "ID of board"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "Number of page"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "description": "Number of column per page"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllColumnsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/NotFoundBoard"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Column"],
+        "summary": "Add new column",
+        "description": "Add new column.",
+        "parameters": [],
+        "requestBody": {
+          "description": "New column object <br># Parameters description:<br>**title** - string, name of column.<br>**boardId** - string, ID of specific board to which a new column can be added",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateColumnRequest"
+              }
+            }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateColumnResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/BadDataBoardId"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/columns/{id}": {
+      "get": {
+        "tags": ["Column"],
+        "summary": "Get column by ID",
+        "description": "Get column by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of column"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetColumnResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/BadId"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/NotFoundColumn"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Column"],
+        "summary": "Update column by ID",
+        "description": "Update column by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of column"
+          }
+        ],
+        "requestBody": {
+          "description": "Updated column object <br># Parameters description:<br>**title** - string, name of column.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateColumnRequest"
+              }
+            }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateColumnResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/BadId"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/NotFoundColumn"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Column"],
+        "summary": "Delete column by ID",
+        "description": "Delete column by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID of Column"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteColumnResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/BadId"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/NotFoundColumn"
                 }
               }
             }
@@ -1444,6 +1745,358 @@
                 "description": "Message of response",
                 "example": "The board with the specified ID was not found"
             }
+        }
+      },
+      "GetAllColumnsResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+              "type": "number",
+              "description": "Status of response",
+              "example": 200
+          },
+          "code": {
+              "type": "string",
+              "description": "Code of response",
+              "example": "ok"
+          },
+          "message": {
+              "type": "string",
+              "description": "Message of response",
+              "example": "Success"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Column's ID",
+                  "example": "65c280d17eb9882dc202fc16"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Column's title",
+                  "example": "Column 1"
+                },
+                "cards": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "example": {
+            "status": 200,
+            "code": "ok",
+            "message": "Success",
+            "data": [
+              {
+                "_id": "65c280d17eb9882dc202fc16",
+                "title": "Column 1",
+                "cards": [
+                    "65be3614cd039701052f2de9",
+                    "65c7c600090f7ef8b93a5817",
+                    "65c7baec475a037290af81ca"
+                ]
+              },
+              {
+                "_id": "65c7c600090f7ef8b93a5817",
+                "title": "Column 2",
+                "cards": [
+                    "65be3614cd039701052f2de9",
+                    "65c7c600090f7ef8b93a5817",
+                    "65c7baec475a037290af81ca"
+                ]
+              }
+            ]
+        }
+      },
+      "CreateColumnRequest": {
+        "type": "object",
+        "required": ["title", "boardId"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Column's title",
+            "example": "Column 1"
+          },
+          "boardId": {
+            "type": "string",
+            "description": "Board's ID",
+            "example": "65bd63bfbe42db36576cef07"
+          }
+        }
+      },
+      "CreateColumnResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 201
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "created"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Column created successfully"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Column's ID",
+                  "example": "65c280d17eb9882dc202fc16"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Column's title",
+                  "example": "Column 1"
+                }
+              }
+            }
+        },
+        "example": {
+            "status": 201,
+            "code": "created",
+            "message": "Column created successfully",
+            "data": {
+              "_id": "65c280d17eb9882dc202fc16",
+              "title": "Column 1"
+            }
+        }
+      },
+      "BadDataBoardId": {
+        "type": "object",
+        "properties": {
+          "status": {
+              "type": "number",
+              "description": "Status of response",
+              "example": 400
+          },
+          "code": {
+              "type": "string",
+              "description": "Code of response",
+              "example": "bad_data"
+          },
+          "message": {
+              "type": "string",
+              "description": "Message of response",
+              "example": "Incorrect 'boardId'. Cannot create a column in a board that does not exist"
+          }
+        }
+      },
+      "GetColumnResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "ok"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Success"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Column's ID",
+                  "example": "65c280d17eb9882dc202fc16"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Column's title",
+                  "example": "Column 1"
+                },
+                "cards": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+        },
+        "example": {
+            "status": 200,
+            "code": "ok",
+            "message": "Success",
+            "data": {
+              "_id": "65c280d17eb9882dc202fc16",
+              "title": "Column 1",
+              "cards": [
+                  "65be3614cd039701052f2de9",
+                  "65c7c600090f7ef8b93a5817",
+                  "65c7baec475a037290af81ca"
+              ]
+            }
+        }
+      },
+      "BadId": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Bad request status",
+                "example": 400
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "bad_id"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Id is not valid"
+            }
+        }
+      },
+      "NotFoundColumn": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Bad request status",
+                "example": 404
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "not_found_column"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "The column with the specified ID was not found"
+            }
+        }
+      },
+      "UpdateColumnRequest": {
+        "type": "object",
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Column's title",
+            "example": "Column 1"
+          }
+        }
+      },
+      "UpdateColumnResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+              "type": "number",
+              "description": "Status of response",
+              "example": 200
+          },
+          "code": {
+              "type": "string",
+              "description": "Code of response",
+              "example": "updated"
+          },
+          "message": {
+              "type": "string",
+              "description": "Message of response",
+              "example": "Column updated successfully"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Column's ID",
+                  "example": "65c280d17eb9882dc202fc16"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Column's title",
+                  "example": "Column 1"
+                },
+                "cards": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "example": {
+            "status": 200,
+            "code": "updated",
+            "message": "Column updated successfully",
+            "data": {
+                "_id": "65c280d17eb9882dc202fc16",
+                "title": "IN PROGRESS"
+              }
+        }
+      },
+      "DeleteColumnResponse": {
+        "type": "object",
+        "properties": {
+            "status": {
+                "type": "number",
+                "description": "Status of response",
+                "example": 200
+            },
+            "code": {
+                "type": "string",
+                "description": "Code of response",
+                "example": "deleted"
+            },
+            "message": {
+                "type": "string",
+                "description": "Message of response",
+                "example": "Column deleted successfully"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Column's ID",
+                  "example": "65c280d17eb9882dc202fc16"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "Column's title",
+                  "example": "Column 1"
+                }
+              }
+            }
+        },
+        "example": {
+          "status": 200,
+          "code": "deleted",
+          "message": "Column deleted successfully",
+          "data": {
+            "_id": "65c280d17eb9882dc202fc16",
+            "title": "Column 1"
+          }
         }
       },
       "User": {
