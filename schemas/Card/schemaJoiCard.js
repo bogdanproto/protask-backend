@@ -13,7 +13,7 @@ export const cardAddSchema = Joi.object({
     .valid(...priorityList)
     .messages({
       'any.only':
-        'The "priority" field must have a valid value: ["without priority", "low", "medium", "high"]',
+        'The "priority" field must have a valid value: ["without", "low", "medium", "high"]',
     }),
   deadline: Joi.date(),
   columnId: Joi.string().pattern(objectIdRegexp).required().messages({
@@ -30,7 +30,7 @@ export const cardUpdateSchema = Joi.object({
     .valid(...priorityList)
     .messages({
       'any.only':
-        'The "priority" field must have a valid value: ["without priority", "low", "medium", "high"]',
+        'The "priority" field must have a valid value: ["without", "low", "medium", "high"]',
     }),
   deadline: Joi.date(),
   columnId: Joi.string().pattern(objectIdRegexp).messages({
