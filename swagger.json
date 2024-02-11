@@ -294,7 +294,7 @@
         "description": "Add new board.",
         "parameters": [],
         "requestBody": {
-          "description": "New board object <br># Parameters description:<br>**title** - string, name of board.<br>**icon** - string, icon on board, one item from the list: ['project','star','loading','puzzle','container','lightning','colors','hexagon'].<br>**backgroundImg** - string or null, wallpaper ID one of the list: <br>[<br>'',<br>'65bd63bfbe42db36576cef07',<br>'65bd64121f0dd29462525104',<br>'65bd646ad035ace54f9fbacc',<br>'65bd64a469dbfedb2b4fa649',<br>'65bd64fd19bce60b401cf9d0',<br>'65bd65322d32baf543f90857',<br>'65bd65616080dd83c4663229',<br>'65bd65dcd834d8796ff702d2',<br>'65bd662514ed70443b11a44c',<br>'65bd66635e770c355ed96f01',<br>'65bd669ae0b3b2e70db649aa',<br>'65bd66cd66783926d5bb0d2f',<br>'65bd66fb61efbfb9a9bcc0a9',<br>'65bd672d2dd95dfda4b5dc66',<br>'65bd67578697af865db4fbf7'<br>]",
+          "description": "New board object <br># Parameters description:<br>**title** - string, name of board.<br>**icon** - string, icon on board, one item from the list: ['project','star','loading','puzzle','container','lightning','colors','hexagon'].<br>**backgroundImg** - string or null, wallpaper ID one of the list: <br>[<br>null,<br>'65bd63bfbe42db36576cef07',<br>'65bd64121f0dd29462525104',<br>'65bd646ad035ace54f9fbacc',<br>'65bd64a469dbfedb2b4fa649',<br>'65bd64fd19bce60b401cf9d0',<br>'65bd65322d32baf543f90857',<br>'65bd65616080dd83c4663229',<br>'65bd65dcd834d8796ff702d2',<br>'65bd662514ed70443b11a44c',<br>'65bd66635e770c355ed96f01',<br>'65bd669ae0b3b2e70db649aa',<br>'65bd66cd66783926d5bb0d2f',<br>'65bd66fb61efbfb9a9bcc0a9',<br>'65bd672d2dd95dfda4b5dc66',<br>'65bd67578697af865db4fbf7'<br>]",
           "required": true,
           "content": {
             "application/json": {
@@ -391,7 +391,7 @@
           }
         ],
         "requestBody": {
-          "description": "Updated board object <br># Parameters description:<br>**title** - string, name of board.<br>**icon** - string, icon on board, one item from the list: ['project','star','loading','puzzle','container','lightning','colors','hexagon'].<br>**backgroundImg** - string or null, wallpaper ID one of the list: <br>[<br>'',<br>'65bd63bfbe42db36576cef07',<br>'65bd64121f0dd29462525104',<br>'65bd646ad035ace54f9fbacc',<br>'65bd64a469dbfedb2b4fa649',<br>'65bd64fd19bce60b401cf9d0',<br>'65bd65322d32baf543f90857',<br>'65bd65616080dd83c4663229',<br>'65bd65dcd834d8796ff702d2',<br>'65bd662514ed70443b11a44c',<br>'65bd66635e770c355ed96f01',<br>'65bd669ae0b3b2e70db649aa',<br>'65bd66cd66783926d5bb0d2f',<br>'65bd66fb61efbfb9a9bcc0a9',<br>'65bd672d2dd95dfda4b5dc66',<br>'65bd67578697af865db4fbf7'<br>]",
+          "description": "Updated board object <br># Parameters description:<br>**title** - string, name of board.<br>**icon** - string, icon on board, one item from the list: ['project','star','loading','puzzle','container','lightning','colors','hexagon'].<br>**backgroundImg** - string or null, wallpaper ID one of the list: <br>[<br>null,<br>'65bd63bfbe42db36576cef07',<br>'65bd64121f0dd29462525104',<br>'65bd646ad035ace54f9fbacc',<br>'65bd64a469dbfedb2b4fa649',<br>'65bd64fd19bce60b401cf9d0',<br>'65bd65322d32baf543f90857',<br>'65bd65616080dd83c4663229',<br>'65bd65dcd834d8796ff702d2',<br>'65bd662514ed70443b11a44c',<br>'65bd66635e770c355ed96f01',<br>'65bd669ae0b3b2e70db649aa',<br>'65bd66cd66783926d5bb0d2f',<br>'65bd66fb61efbfb9a9bcc0a9',<br>'65bd672d2dd95dfda4b5dc66',<br>'65bd67578697af865db4fbf7'<br>]",
           "required": true,
           "content": {
             "application/json": {
@@ -1177,7 +1177,7 @@
                 "backgroundImg": {
                   "type": "string",
                   "enum": [
-                    "''",
+                    "null",
                     "65bd63bfbe42db36576cef07",
                     "65bd64121f0dd29462525104",
                     "65bd646ad035ace54f9fbacc",
@@ -1281,7 +1281,7 @@
                 "backgroundImg": {
                   "type": "string",
                   "enum": [
-                    "''",
+                    "null",
                     "65bd63bfbe42db36576cef07",
                     "65bd64121f0dd29462525104",
                     "65bd646ad035ace54f9fbacc",
@@ -1350,7 +1350,7 @@
           "backgroundImg": {
             "type": "string",
             "enum": [
-              "''",
+              "null",
               "65bd63bfbe42db36576cef07",
               "65bd64121f0dd29462525104",
               "65bd646ad035ace54f9fbacc",
@@ -1421,7 +1421,7 @@
                 "backgroundImg": {
                   "type": "string",
                   "enum": [
-                    "''",
+                    "null",
                     "65bd63bfbe42db36576cef07",
                     "65bd64121f0dd29462525104",
                     "65bd646ad035ace54f9fbacc",
@@ -1501,7 +1501,7 @@
           "backgroundImg": {
             "type": "string",
             "enum": [
-              "''",
+              "null",
               "65bd63bfbe42db36576cef07",
               "65bd64121f0dd29462525104",
               "65bd646ad035ace54f9fbacc",
@@ -1572,7 +1572,7 @@
                 "backgroundImg": {
                   "type": "string",
                   "enum": [
-                    "''",
+                    "null",
                     "65bd63bfbe42db36576cef07",
                     "65bd64121f0dd29462525104",
                     "65bd646ad035ace54f9fbacc",
@@ -1674,7 +1674,7 @@
                 "backgroundImg": {
                   "type": "string",
                   "enum": [
-                    "''",
+                    "null",
                     "65bd63bfbe42db36576cef07",
                     "65bd64121f0dd29462525104",
                     "65bd646ad035ace54f9fbacc",
