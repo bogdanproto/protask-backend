@@ -22,8 +22,8 @@ const cardSchema = new Schema(
       default: 'without',
     },
     deadline: {
-      type: Date,
-      default: null,
+      type: String,
+      default: '--/--/----',
     },
     column: {
       type: Schema.Types.ObjectId,
