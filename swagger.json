@@ -39,6 +39,10 @@
     {
       "name": "Card",
       "description": "Card endpoints"
+    },
+    {
+      "name": "Help",
+      "description": "Help endpoints"
     }
   ],
   "paths": {
@@ -1369,6 +1373,94 @@
                 "application/json": {
                 "schema": {
                     "$ref": "#/components/schemas/NotFoundCard"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/needhelp/": {
+      "post": {
+        "tags": ["Help"],
+        "summary": "Send help request to support service",
+        "description": "Send help request to support service.",
+        "parameters": [],
+        "requestBody": {
+          "description": "Need help message <br># Parameters description:<br>**email** - string, sender email.**Required field**<br>**comment** - string, the message about problem.**Required field**",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                      "type": "string",
+                      "description": "User's email",
+                      "format": "email"
+                  },
+                  "comment": {
+                      "type": "string",
+                      "description": "User's comment",
+                      "example": "Hello, I need help with my account!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Response message",
+                      "example": "Your comment has been sent"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+                "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "number",
+                      "description": "Response status",
+                      "example": 400
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "Response code",
+                      "example": "bad_params"
+                    },
+                     "message": {
+                      "type": "string",
+                      "description": "Response message",
+                      "example": "'email' with value 'test' fails to match the required pattern: /^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$/"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
                 }
               }
             }
