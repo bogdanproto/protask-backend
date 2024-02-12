@@ -1,6 +1,6 @@
 const needHelpPath = {
-    ROOT: '/need-help'
+  ROOT: '/needhelp',
+  BASE: '/',
+};
 
-  };
-
-  export default needHelpPath;
+export default needHelpPath;

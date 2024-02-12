@@ -13,6 +13,7 @@ import {
   columnsPath,
   cardsPath,
   userPath,
+  needHelpPath,
 } from './const/index.js';
 import { handlelibrariesErr, getSwaggerDocument } from './helpers/index.js';
 
@@ -22,6 +23,7 @@ import wallpaperRouter from './routes/api/wallpapers-router.js';
 import columnsRouter from './routes/api/columns-router.js';
 import cardsRouter from './routes/api/cards-router.js';
 import userRouter from './routes/api/user-router.js';
+import helpRouter from './routes/api/help-router.js';
 
 // ============================================================
 
@@ -46,6 +48,7 @@ app.use(boardsPath.ROOT, boardsRouter);
 app.use(wallpaperPath.ROOT, wallpaperRouter);
 app.use(columnsPath.ROOT, columnsRouter);
 app.use(cardsPath.ROOT, cardsRouter);
+app.use(needHelpPath.ROOT, helpRouter)
 
 app.use((req, res) => {
   res.status(errorStatus.NOT_FOUND.status).json(errorStatus.NOT_FOUND);
