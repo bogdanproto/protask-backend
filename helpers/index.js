@@ -6,3 +6,4 @@ export { default as getSwaggerDocument } from './swaggerHelper.js';
 export { default as deleteFile } from './fileHandlers/deleteFile.js';
 export { default as handleAvatarFile } from './fileHandlers/handleAvatarFile.js';
 export { default as uploadAvatarToCloud } from './cloud/uploadAvatarToCloud.js';
+export {default as sendEmail} from './sendEmail.js';
