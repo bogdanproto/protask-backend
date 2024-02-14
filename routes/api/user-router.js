@@ -16,6 +16,8 @@ import userCtrl from '../../controllers/user/index.js';
 
 const userRouter = express.Router();
 
+userRouter.get(userPath.CURRENT, authenticate, userCtrl.getCurrent);
+
 userRouter.patch(
   userPath.THEME,
   authenticate,

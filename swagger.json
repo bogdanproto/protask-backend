@@ -146,37 +146,6 @@
         }
       }
     },
-    "/api/auth/current": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Get current user info",
-        "description": "The \"current\" endpoint is used to retrieve information about the current authorized user.<br>This endpoint returns status, code, message and an object that contains information about the user, such as userName, email, theme, avatarCloudURL.",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-        "responses": {
-          "200": {
-            "description": "Successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CurrentUser"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized Token",
-            "content": {
-                "application/json": {
-                "schema": {
-                    "$ref": "#/components/schemas/UnauthorizedToken"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/auth/": {
       "patch": {
         "tags": ["Auth"],
@@ -242,6 +211,37 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/LogoutResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized Token",
+            "content": {
+                "application/json": {
+                "schema": {
+                    "$ref": "#/components/schemas/UnauthorizedToken"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/current": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get current user info",
+        "description": "The \"current\" endpoint is used to retrieve information about the current authorized user.<br>This endpoint returns status, code, message and an object that contains information about the user, such as userName, email, theme, avatarCloudURL.",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUser"
                 }
               }
             }
