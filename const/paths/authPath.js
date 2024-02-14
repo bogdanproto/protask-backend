@@ -3,7 +3,6 @@ const authPath = {
   BASE: '/',
   SIGN_IN: '/signin',
   SIGN_UP: '/signup',
-  CURRENT: '/current',
   LOGOUT: '/logout',
 };
 
