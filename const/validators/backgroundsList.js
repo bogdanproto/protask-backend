@@ -20,6 +20,7 @@ const backgroundsList = [
   '65bd66fb61efbfb9a9bcc0a9',
   '65bd672d2dd95dfda4b5dc66',
   '65bd67578697af865db4fbf7',
+  '65ccd88d668db637b91ca961',
 ];
 
 export default backgroundsList;
